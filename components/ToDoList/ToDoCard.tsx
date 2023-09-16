@@ -1,7 +1,7 @@
 import { ToDo } from "@/types/toDoList"
 import { HTMLAttributes } from "react"
 import classNames from "classnames"
-import { ContextMenu } from "../ContextMenu"
+import ContextMenuTrigger from "../ContextMenu/ContextMenuTrigger"
 
 const ToDoCard = (
   props: ToDo
@@ -21,8 +21,7 @@ const ToDoCard = (
   } = props
 
   return (
-    <ContextMenu
-      id={`to-do-card-${id}`}
+    <ContextMenuTrigger
       menus={[{
         label: "完成",
         icon: "icon-[ph--check-bold]",
@@ -51,7 +50,7 @@ const ToDoCard = (
           solved && "line-through opacity-50"
         )}>{props.content}</p>
       </div>
-    </ContextMenu>
+    </ContextMenuTrigger>
   )
 }
 

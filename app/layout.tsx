@@ -1,3 +1,4 @@
+import ContextMenuProvider from "@/components/ContextMenu/ContextMenuProvider"
 import "./globals.css"
 import type { Metadata } from "next"
 
@@ -13,7 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className='pbg'>{children}</body>
+      <body className='pbg'>
+        <ContextMenuProvider>
+          {children}
+        </ContextMenuProvider>
+      </body>
     </html>
   )
 }

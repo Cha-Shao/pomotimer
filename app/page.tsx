@@ -1,5 +1,8 @@
+"use client"
+
 import Card from "@/components/Card"
 import ToDoListCard from "@/components/ToDoList/ToDoListCard"
+import ContextMenuTrigger from "@/components/ContextMenu/ContextMenuTrigger"
 
 const
   hour = 1,
@@ -9,9 +12,17 @@ export default function Home() {
   return (
     <main className="max-w-7xl min-w-[1024px] mx-auto grid grid-cols-3 gap-4 my-6">
       <section className="col-span-2">
-        <Card>
-
-        </Card>
+        <ContextMenuTrigger menus={[{
+          label: "accept",
+          action: () => console.log("ok"),
+        }, {
+          label: "reject",
+          danger: true,
+        }]}>
+          <Card>
+            abc
+          </Card>
+        </ContextMenuTrigger>
       </section>
       <section>
         <Card className="mb-4">
