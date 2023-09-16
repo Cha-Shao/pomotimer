@@ -1,6 +1,5 @@
 import classNames from "classnames"
 import {
-  MouseEvent,
   useCallback,
   useContext,
   useEffect,
@@ -27,12 +26,9 @@ const ContextMenu = (props: ContextMenuProps) => {
   const { setContextMenu } = useContext(contextMenuContext)
   const menuRef = useRef<HTMLDivElement>(null)
 
-  const handleClick = useCallback(() => {
-    (e: MouseEvent<HTMLElement>) => {
-      if (!menuRef.current?.contains(e.target as Node)) {
-        setContextMenu(null)
-      }
-    }
+  const handleClick = useCallback((e: MouseEvent) => {
+    if (!menuRef.current?.contains(e.target as Node))
+      setContextMenu(null)
   }, [setContextMenu])
 
   useEffect(() => {
@@ -56,7 +52,10 @@ const ContextMenu = (props: ContextMenuProps) => {
       {props.menus.map((menu, i) => (
         <li
           key={i}
-          onClick={menu.action}
+          onClick={() => {
+            menu.action && menu.action()
+            setContextMenu(null)
+          }}
           className={classNames(
             "p-2 flex items-center gap-2 rounded-md",
             menu.danger ? "hover:bg-red-500 hover:text-white" : "hover:bg-lightBackground dark:hover:bg-darkBackground"
