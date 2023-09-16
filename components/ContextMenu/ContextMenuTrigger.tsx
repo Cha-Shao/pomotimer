@@ -1,7 +1,7 @@
 "use client"
 
 import {
-  MouseEventHandler,
+  MouseEvent,
   ReactElement,
   cloneElement,
   useContext,
@@ -28,7 +28,7 @@ const ContextMenuTrigger = (
 ) => {
   const { setContextMenu } = useContext(contextMenuContext)
 
-  const handleContextMenu = (e: MouseEventHandler<HTMLElement>) => {
+  const handleContextMenu = (e: MouseEvent<HTMLElement>) => {
     // @ts-ignore
     e.preventDefault()
     setContextMenu({

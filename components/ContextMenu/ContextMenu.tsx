@@ -1,6 +1,7 @@
 import classNames from "classnames"
 import {
   MouseEvent,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -26,16 +27,18 @@ const ContextMenu = (props: ContextMenuProps) => {
   const { setContextMenu } = useContext(contextMenuContext)
   const menuRef = useRef<HTMLDivElement>(null)
 
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (!menuRef.current?.contains(e.target)) {
-      setContextMenu(null)
+  const handleClick = useCallback(() => {
+    (e: MouseEvent<HTMLElement>) => {
+      if (!menuRef.current?.contains(e.target as Node)) {
+        setContextMenu(null)
+      }
     }
-  }
+  }, [setContextMenu])
 
   useEffect(() => {
     addEventListener("click", handleClick)
     return () => removeEventListener("click", handleClick)
-  }, [])
+  }, [handleClick])
 
   return (
     <motion.div
