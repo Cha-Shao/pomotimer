@@ -43,7 +43,7 @@ export function ContextMenu(
             animate={{ width: "auto", height: "auto" }}
             className="overflow-hidden"
           >
-            <ul {...api.contentProps} className="p-2 bg shadow-sm rounded-lg border border-border/10">
+            <ul {...api.contentProps} className="p-2 bg rounded-lg border border-border/10">
               {props.menus.map((menu, i) =>
                 <li
                   key={i}
@@ -53,7 +53,7 @@ export function ContextMenu(
                     "rounded-md p-2",
                     menu.danger ? "hover:bg-red-500 hover:text-light" : "hover:bg-lightBackground dark:hover:bg-darkBackground"
                   )}
-                  onClick={menu.action}
+                  onClick={() => menu.action()}
                 >
                   <span className="flex items-center flex-nowrap gap-2">
                     {menu.icon && <span className={classNames(menu.icon, "text-lg")} />}

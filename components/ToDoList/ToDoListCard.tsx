@@ -9,6 +9,7 @@ import Card from "../Card"
 import { ToDo } from "@/types/toDoList"
 import ToDoCard from "./ToDoCard"
 import {
+  AnimatePresence,
   Reorder,
   motion,
   useCycle,
@@ -118,20 +119,24 @@ const ToDoListCard = () => {
                       key={toDo.id}
                       id={toDo.id.toString()}
                       value={toDo}
-                      className={classNames("relative", toDo.solved && "hidden")}
+                      className="relative"
                     >
-                      <ToDoCard
-                        {...toDo}
-                        onMouseEnter={() => setHoverItem(toDo.id)}
-                        onSolved={() => handleSolve(toDo.id)}
-                        onDelete={() => handleDelete(toDo.id)}
-                      />
-                      {toDo.id === hoverItem && (
-                        <motion.div
-                          layoutId="to-do-list"
-                          className="absolute top-0 h-full w-full pbg rounded-md"
-                          transition={{ duration: 0.1 }}
-                        />
+                      {!toDo.solved && (
+                        <Fragment>
+                          <ToDoCard
+                            {...toDo}
+                            onMouseEnter={() => setHoverItem(toDo.id)}
+                            onSolve={() => handleSolve(toDo.id)}
+                            onDelete={() => handleDelete(toDo.id)}
+                          />
+                          {toDo.id === hoverItem && (
+                            <motion.div
+                              layoutId="to-do-list"
+                              className="absolute top-0 h-full w-full pbg rounded-md"
+                              transition={{ duration: 0.1 }}
+                            />
+                          )}
+                        </Fragment>
                       )}
                     </Reorder.Item>
                   ))}
@@ -147,46 +152,53 @@ const ToDoListCard = () => {
                   expanded && "rotate-180"
                 )} />
               </button>
-              {(expanded && toDoList.filter(toDo => toDo.solved).length > 0) && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="mt-4"
-                  onMouseLeave={() => setHoverItem(null)}
-                >
-                  <Reorder.Group
-                    as="ul"
-                    values={toDoList}
-                    onReorder={newList => {
-                      setToDoList(newList)
-                      localStorage.setItem("to-do-list", JSON.stringify(newList))
-                    }}
+              <AnimatePresence>
+                {(expanded && toDoList.filter(toDo => toDo.solved).length > 0) && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-4 overflow-hidden"
+                    onMouseLeave={() => setHoverItem(null)}
                   >
-                    {toDoList.map(toDo => (
-                      <Reorder.Item
-                        key={toDo.id}
-                        id={toDo.id.toString()}
-                        value={toDo}
-                        className={classNames("relative", !toDo.solved && "hidden")}
-                      >
-                        <ToDoCard
-                          {...toDo}
-                          onMouseEnter={() => setHoverItem(toDo.id)}
-                          onSolved={() => handleSolve(toDo.id)}
-                          onDelete={() => handleDelete(toDo.id)}
-                        />
-                        {toDo.id === hoverItem && (
-                          <motion.div
-                            layoutId="to-do-list"
-                            className="absolute top-0 h-full w-full pbg rounded-md"
-                            transition={{ duration: 0.1 }}
-                          />
-                        )}
-                      </Reorder.Item>
-                    ))}
-                  </Reorder.Group>
-                </motion.div>
-              )}
+                    <Reorder.Group
+                      as="ul"
+                      values={toDoList}
+                      onReorder={newList => {
+                        setToDoList(newList)
+                        localStorage.setItem("to-do-list", JSON.stringify(newList))
+                      }}
+                    >
+                      {toDoList.map(toDo => (
+                        <Reorder.Item
+                          key={toDo.id}
+                          id={toDo.id.toString()}
+                          value={toDo}
+                          className="relative"
+                        >
+                          {toDo.solved && (
+                            <Fragment>
+                              <ToDoCard
+                                {...toDo}
+                                onMouseEnter={() => setHoverItem(toDo.id)}
+                                onSolve={() => handleSolve(toDo.id)}
+                                onDelete={() => handleDelete(toDo.id)}
+                              />
+                              {toDo.id === hoverItem && (
+                                <motion.div
+                                  layoutId="to-do-list"
+                                  className="absolute top-0 h-full w-full pbg rounded-md"
+                                  transition={{ duration: 0.1 }}
+                                />
+                              )}
+                            </Fragment>
+                          )}
+                        </Reorder.Item>
+                      ))}
+                    </Reorder.Group>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </Fragment>
           ) : (
             <div className="text-center my-4 py-4">

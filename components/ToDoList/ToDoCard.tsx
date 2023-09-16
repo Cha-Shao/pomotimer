@@ -7,7 +7,7 @@ const ToDoCard = (
   props: ToDo
     & Omit<HTMLAttributes<HTMLDivElement>, "id">
     & {
-      onSolved: () => void
+      onSolve: () => void
       onDelete: () => void
     }
 ) => {
@@ -15,7 +15,7 @@ const ToDoCard = (
     id,
     content,
     solved,
-    onSolved: onSolve,
+    onSolve,
     onDelete,
     ...attrs
   } = props
