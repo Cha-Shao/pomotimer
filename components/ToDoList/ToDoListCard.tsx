@@ -14,6 +14,7 @@ import {
   useCycle,
 } from "framer-motion"
 import classNames from "classnames"
+import confetti from "canvas-confetti"
 
 const ToDoListCard = () => {
   const [hoverItem, setHoverItem] = useState<number | null>(null)
@@ -34,11 +35,22 @@ const ToDoListCard = () => {
   }
   const handleSolve = (id: number) => {
     const newToDoList = toDoList!.map(toDo => {
-      if (toDo.id === id)
+      if (toDo.id === id) {
+        if (!toDo.solved) {
+          confetti({
+            origin: { x: 0 },
+            angle: 60,
+          })
+          confetti({
+            origin: { x: 1 },
+            angle: 120,
+          })
+        }
         return {
           ...toDo,
           solved: !toDo.solved,
         }
+      }
       return toDo
     })
     setToDoList(newToDoList)
