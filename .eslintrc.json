@@ -1,0 +1,21 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "semi": [
+      "warn",
+      "never"
+    ],
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ],
+    "quotes": [
+      "warn",
+      "double"
+    ],
+    "eol-last": [
+      "warn",
+      "always"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "cSpell.words": [
+    "figureurl",
+    "frameloop",
+    "misans",
+    "mmixel",
+    "nanostores",
+    "NEXTAUTH",
+    "nextjs",
+    "rehype",
+    "toploader",
+    "wechat"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}

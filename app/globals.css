@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg {
+  @apply bg-light dark:bg-dark;
+}
+.pbg {
+  @apply bg-lightBackground dark:bg-darkBackground;
+}
