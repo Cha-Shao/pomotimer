@@ -27,14 +27,15 @@ const ToDoListCard = () => {
     const thisList = {
       id: new Date().getTime(),
       content: inputToDo,
+      important: false,
       solved: false,
-    }
+    } as ToDo
     const newToDoList = [...toDoList || [], thisList]
     setToDoList(newToDoList)
     localStorage.setItem("to-do-list", JSON.stringify(newToDoList))
     setInputToDo("")
   }
-  const handleSolve = (id: number) => {
+  const handleSwitchSolve = (id: number) => {
     const newToDoList = toDoList!.map(toDo => {
       if (toDo.id === id) {
         if (!toDo.solved) {
@@ -50,6 +51,19 @@ const ToDoListCard = () => {
         return {
           ...toDo,
           solved: !toDo.solved,
+        }
+      }
+      return toDo
+    })
+    setToDoList(newToDoList)
+    localStorage.setItem("to-do-list", JSON.stringify(newToDoList))
+  }
+  const handleSwitchImportant = (id: number) => {
+    const newToDoList = toDoList!.map(toDo => {
+      if (toDo.id === id) {
+        return {
+          ...toDo,
+          important: !toDo.important,
         }
       }
       return toDo
@@ -80,7 +94,7 @@ const ToDoListCard = () => {
 
   return (
     <Card>
-      <h3 className="mb-4">任务</h3>
+      <h3 className="mb-4">任务列表</h3>
       <div>
         <div className="flex items-center pbg border-2 border-border/10 focus-within:border-primary duration-100 rounded-lg">
           <input
@@ -126,7 +140,8 @@ const ToDoListCard = () => {
                           <ToDoCard
                             {...toDo}
                             onMouseEnter={() => setHoverItem(toDo.id)}
-                            onSolve={() => handleSolve(toDo.id)}
+                            switchSolve={() => handleSwitchSolve(toDo.id)}
+                            switchImportant={() => handleSwitchImportant(toDo.id)}
                             onDelete={() => handleDelete(toDo.id)}
                           />
                           {toDo.id === hoverItem && (
@@ -148,17 +163,17 @@ const ToDoListCard = () => {
               >
                 <span>已完成任务</span>
                 <span className={classNames(
-                  "icon-[ph--triangle-fill] text-xs",
+                  "icon-[ph--triangle-fill] text-xs duration-300",
                   expanded && "rotate-180"
                 )} />
               </button>
               <AnimatePresence>
                 {(expanded && toDoList.filter(toDo => toDo.solved).length > 0) && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="mt-4 overflow-hidden"
+                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                    animate={{ opacity: 1, height: "auto", marginTop: "1rem" }}
+                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                    className="overflow-hidden"
                     onMouseLeave={() => setHoverItem(null)}
                   >
                     <Reorder.Group
@@ -181,7 +196,8 @@ const ToDoListCard = () => {
                               <ToDoCard
                                 {...toDo}
                                 onMouseEnter={() => setHoverItem(toDo.id)}
-                                onSolve={() => handleSolve(toDo.id)}
+                                switchSolve={() => handleSwitchSolve(toDo.id)}
+                                switchImportant={() => handleSwitchImportant(toDo.id)}
                                 onDelete={() => handleDelete(toDo.id)}
                               />
                               {toDo.id === hoverItem && (

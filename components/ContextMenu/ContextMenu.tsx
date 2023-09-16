@@ -43,6 +43,7 @@ const ContextMenu = (props: ContextMenuProps) => {
       animate={{ opacity: 1, scale: 1, transformOrigin: "0 0" }}
       exit={{ opacity: 0, scale: 0.5, transformOrigin: "0 0" }}
       transition={{ duration: 0.1 }}
+      layout
       className="z-50 absolute p-2 bg border border-border rounded-lg shadow-sm"
       style={{
         left: props.x,
@@ -57,7 +58,7 @@ const ContextMenu = (props: ContextMenuProps) => {
             setContextMenu(null)
           }}
           className={classNames(
-            "p-2 flex items-center gap-2 rounded-md",
+            "py-2 px-4   flex items-center gap-2 rounded-md",
             menu.danger ? "hover:bg-red-500 hover:text-white" : "hover:bg-lightBackground dark:hover:bg-darkBackground"
           )}
         >

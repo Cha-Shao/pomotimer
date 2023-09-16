@@ -7,15 +7,18 @@ const ToDoCard = (
   props: ToDo
     & Omit<HTMLAttributes<HTMLDivElement>, "id">
     & {
-      onSolve: () => void
+      switchSolve: () => void
+      switchImportant: () => void
       onDelete: () => void
     }
 ) => {
   const {
     id,
     content,
+    important,
     solved,
-    onSolve,
+    switchSolve,
+    switchImportant,
     onDelete,
     ...attrs
   } = props
@@ -23,11 +26,15 @@ const ToDoCard = (
   return (
     <ContextMenuTrigger
       menus={[{
-        label: "完成",
-        icon: "icon-[ph--check-bold]",
-        action: onSolve,
+        label: solved ? "标记为未完成" : "标记为已完成",
+        icon: solved ? "icon-[ph--circle-bold]" : "icon-[ph--check-circle-bold]",
+        action: switchSolve,
       }, {
-        label: "删除",
+        label: important ? "取消重要标记" : "标记为重要",
+        icon: "icon-[ph--star-bold]",
+        action: switchImportant,
+      }, {
+        label: "删除任务",
         icon: "icon-[ph--trash-bold]",
         action: onDelete,
         danger: true,
@@ -38,17 +45,23 @@ const ToDoCard = (
         className={classNames(
           "relative",
           "p-2 list-none z-10 flex items-center gap-2",
+          solved && "opacity-50",
           attrs.className
         )}
       >
-        <button className="flex justify-center items-center" onClick={onSolve}>
+        <button className="flex justify-center items-center" onClick={switchSolve}>
           {solved
             ? <span className="icon-[ph--check-circle-fill] text-lg text-primary" />
             : <span className="icon-[ph--circle-bold] text-lg" />}
         </button>
-        <p className={classNames(
-          solved && "line-through opacity-50"
-        )}>{props.content}</p>
+        <p className={classNames("grow", solved && "line-through")}>
+          {props.content}
+        </p>
+        <button className="flex justify-center items-center active:scale-50 duration-200" onClick={switchImportant}>
+          {important
+            ? <span className="icon-[ph--star-fill] text-lg text-primary" />
+            : <span className="icon-[ph--star-bold] text-lg opacity-50" />}
+        </button>
       </div>
     </ContextMenuTrigger>
   )

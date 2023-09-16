@@ -1,7 +1,7 @@
 "use client"
 
 import Card from "@/components/Card"
-import ToDoListCard from "@/components/ToDoList/ToDoListCard"
+import ToDoList from "@/components/ToDoList/ToDoList"
 import ContextMenuTrigger from "@/components/ContextMenu/ContextMenuTrigger"
 
 const
@@ -34,7 +34,7 @@ export default function Home() {
             分钟
           </p>
         </Card>
-        <ToDoListCard />
+        <ToDoList />
       </section>
     </main>
   )
