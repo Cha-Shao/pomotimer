@@ -11,7 +11,7 @@ const levelColor = [
   "border-primary/30 bg-primary/20",
   "border-primary/70 bg-primary/50",
   "border-primary bg-primary",
-  "border-[#cf3d36] bg-[#cf3d36]",
+  "border-[#c23a33] bg-[#c23a33]",
 ]
 
 const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {

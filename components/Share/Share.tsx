@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react"
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
 const Share = () => {
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -27,26 +28,28 @@ const Share = () => {
   return (
     <Card>
       <h2 className="font-bold text-2xl mb-4">分享番茄钟</h2>
-      <p className="mb-4">如果觉得好用，请向你的朋友分享这个网站！</p>
-      <button
-        ref={buttonRef}
-        className={classNames(
-          "border border-border",
-          "rounded-full h-10 w-full",
-          "flex items-center p-1",
-          "hover:bg-primary hover:text-light hover:border-primary",
-          "group duration-100",
-          "relative",
-        )}
-        onClick={handleClick}
-      >
-        <span className="h-8 w-8 rounded-full flex justify-center items-center invisible" />
-        <span className="grow">复制链接</span>
-        <span className="h-8 w-8 rounded-full bg flex justify-center items-center text-dark dark:text-light">
-          <span className="icon-[ph--link-bold]" />
-        </span>
-        <ShareEffect effects={effects} setEffects={setEffects} />
-      </button>
+      <p className="mb-4">如果觉得好用，请向您的朋友分享这个网站！</p>
+      <CopyToClipboard text="https://target.elfmc.com/">
+        <button
+          ref={buttonRef}
+          className={classNames(
+            "border border-border",
+            "rounded-full h-10 w-full",
+            "flex items-center p-1",
+            "hover:bg-primary hover:text-light hover:border-primary",
+            "group duration-100",
+            "relative",
+          )}
+          onClick={handleClick}
+        >
+          <span className="h-8 w-8 rounded-full flex justify-center items-center invisible" />
+          <span className="grow">复制链接</span>
+          <span className="h-8 w-8 rounded-full bg flex justify-center items-center text-dark dark:text-light">
+            <span className="icon-[ph--link-bold]" />
+          </span>
+          <ShareEffect effects={effects} setEffects={setEffects} />
+        </button>
+      </CopyToClipboard>
     </Card>
   )
 }

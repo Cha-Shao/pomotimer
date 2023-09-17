@@ -10,11 +10,11 @@ import FocusBlock from "./FocusBlock"
 
 const focusData: {
   focusTime: [number, ...Array<number>] & { length: 30 }
-  lastUpdate: Date
+  lastUpdate: string
 } = {
   focusTime: [
     0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464],
-  lastUpdate: new Date(),
+  lastUpdate: "2023-09-17T17:04:18.520Z",
 }
 
 const FocusTime = () => {
