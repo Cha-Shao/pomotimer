@@ -1,8 +1,8 @@
 import Card from "@/components/Card"
 import ToDoList from "@/components/ToDoList/ToDoList"
-import FocusTime from "@/components/FocusTime"
+import FocusTime from "@/components/FocusTime/FocusTime"
 import Focus from "@/components/Focus"
-import classNames from "classnames"
+import Share from "@/components/Share/Share"
 
 export default function Home() {
   return (
@@ -18,23 +18,7 @@ export default function Home() {
       <section>
         <FocusTime />
         <ToDoList />
-        <Card>
-          <h2 className="font-bold text-2xl mb-4">分享番茄钟</h2>
-          <p className="mb-4">如果你觉得好用，请向你的朋友分享这个网站！</p>
-          <button className={classNames(
-            "border border-border",
-            "rounded-full h-10 w-full",
-            "flex items-center p-1",
-            "hover:bg-primary hover:text-light hover:border-primary",
-            "group duration-100",
-          )}>
-            <span className="h-8 w-8 rounded-full flex justify-center items-center invisible" />
-            <span className="grow">分享网站</span>
-            <span className="h-8 w-8 rounded-full bg flex justify-center items-center text-dark">
-              <span className="icon-[ph--share-bold]" />
-            </span>
-          </button>
-        </Card>
+        <Share />
       </section>
     </main>
   )

@@ -5,6 +5,7 @@ const Card = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
+      title={undefined}
       className={classNames(
         props.className,
         "p-6 border border-border rounded-2xl bg shadow-sm",
