@@ -9,6 +9,7 @@ const EnterAnimation = () => {
     <motion.div
       initial={{ height: "100vh" }}
       animate={{ height: 0 }}
+      transition={{ delay: 1 }}
       className="fixed top-0 left-0 w-screen bg-primary z-50 flex justify-center items-center overflow-hidden"
     >
       <div className="rounded-full bg overflow-hidden">

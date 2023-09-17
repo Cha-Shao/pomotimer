@@ -19,6 +19,9 @@ const config: Config = {
 
         border: "#71717a40",
       },
+      gridTemplateColumns: {
+        21: "repeat(21, minmax(0, 1fr))",
+      },
     },
   },
   plugins: [

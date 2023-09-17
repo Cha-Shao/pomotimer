@@ -93,13 +93,12 @@ const ToDoListCard = () => {
   }, [])
 
   return (
-    <Card>
-      <h3 className="mb-4">任务列表</h3>
+    <Card title="任务列表" className="mb-4">
       <div>
         <div className="flex items-center pbg border-2 border-border/10 focus-within:border-primary duration-100 rounded-lg">
           <input
             type="text"
-            placeholder="添加任务，然后按下「回车」"
+            placeholder="填写任务，然后按下「回车」"
             className="grow bg-transparent min-h-[2rem] outline-none px-2"
             value={inputToDo}
             onChange={e => setInputToDo(e.target.value)}
@@ -164,7 +163,7 @@ const ToDoListCard = () => {
                 <span>已完成任务</span>
                 <span className={classNames(
                   "icon-[ph--triangle-fill] text-xs duration-300",
-                  expanded && "rotate-180"
+                  !expanded && "rotate-180"
                 )} />
               </button>
               <AnimatePresence>

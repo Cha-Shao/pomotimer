@@ -7,9 +7,12 @@ const Card = (props: HTMLAttributes<HTMLDivElement>) => {
       {...props}
       className={classNames(
         props.className,
-        "p-6 border border-border rounded-lg bg shadow-sm",
+        "p-6 border border-border rounded-2xl bg shadow-sm",
       )}
-    />
+    >
+      {props.title && <h3 className="font-bold mb-4">{props.title}</h3>}
+      {props.children}
+    </div>
   )
 }
 
