@@ -54,7 +54,7 @@ const FocusTime = () => {
       <div className="flex justify-end items-center gap-1">
         <p className="text-xs">分心</p>
         {Array(5).fill(null).map((_, i) => (
-          <FocusBlock key={i} maxTime={5} currentTime={i} className="!w-3 !h-3" />
+          <FocusBlock key={i} maxTime={5} currentTime={i} className="!w-3 !h-3" noHover />
         ))}
         <p className="text-xs">专注</p>
       </div>

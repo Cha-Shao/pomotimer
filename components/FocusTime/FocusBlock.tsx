@@ -1,10 +1,10 @@
 import classNames from "classnames"
 import { HTMLAttributes } from "react"
-import dayjs from "dayjs"
 
 interface Props {
   maxTime: number
   currentTime: number
+  noHover?: boolean
 }
 
 const levelColor = [
@@ -18,6 +18,7 @@ const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
   const {
     maxTime,
     currentTime,
+    noHover,
     ...attrs
   } = props
 
@@ -47,7 +48,7 @@ const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
         attrs.className
       )}
     >
-      <span className={classNames(
+      {!noHover && <span className={classNames(
         "opacity-0 group-hover:opacity-100 duration-100",
         "absolute bottom-5 left-1/2 -translate-x-1/2",
         "bg rounded-full border border-border/10 shadow-sm",
@@ -58,7 +59,7 @@ const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
         {currentTime > 0
           ? `${Math.floor(currentTime / 60)}小时${currentTime % 60}分钟`
           : "今日无专注"}
-      </span>
+      </span>}
     </div>
   )
 }
