@@ -156,7 +156,8 @@ const ToDoListCard = () => {
                   ))}
                 </Reorder.Group>
               </motion.div>
-              <button
+              <motion.button
+                layout
                 className="mx-auto pbg px-2 text-sm rounded-full flex items-center gap-1"
                 onClick={() => toggleExpanded()}
               >
@@ -165,7 +166,7 @@ const ToDoListCard = () => {
                   "icon-[ph--triangle-fill] text-xs duration-300",
                   !expanded && "rotate-180"
                 )} />
-              </button>
+              </motion.button>
               <AnimatePresence>
                 {(expanded && toDoList.filter(toDo => toDo.solved).length > 0) && (
                   <motion.div

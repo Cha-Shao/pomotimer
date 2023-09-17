@@ -19,7 +19,7 @@ const Share = () => {
       {
         id: new Date().getTime(),
         x: e.clientX - buttonRef.current!.offsetLeft,
-        y: e.clientY - buttonRef.current!.offsetTop,
+        y: e.clientY + window.scrollY - buttonRef.current!.offsetTop,
       },
     ]))
   }
@@ -41,9 +41,9 @@ const Share = () => {
         onClick={handleClick}
       >
         <span className="h-8 w-8 rounded-full flex justify-center items-center invisible" />
-        <span className="grow">分享网站</span>
-        <span className="h-8 w-8 rounded-full bg flex justify-center items-center text-dark">
-          <span className="icon-[ph--share-bold]" />
+        <span className="grow">复制链接</span>
+        <span className="h-8 w-8 rounded-full bg flex justify-center items-center text-dark dark:text-light">
+          <span className="icon-[ph--link-bold]" />
         </span>
         <ShareEffect effects={effects} setEffects={setEffects} />
       </button>

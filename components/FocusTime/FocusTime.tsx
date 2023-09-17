@@ -12,7 +12,8 @@ const focusData: {
   focusTime: [number, ...Array<number>] & { length: 30 }
   lastUpdate: Date
 } = {
-  focusTime: [127, 171, 115, 136, 192, 185, 120, 18, 125, 0, 132, 128, 127, 123, 149, 111, 0, 133, 145, 0, 0, 0, 164, 187, 133, 110, 121, 19, 126, 192],
+  focusTime: [
+    0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464],
   lastUpdate: new Date(),
 }
 
@@ -53,7 +54,7 @@ const FocusTime = () => {
       <div className="flex justify-end items-center gap-1">
         <p className="text-xs">分心</p>
         {Array(5).fill(null).map((_, i) => (
-          <FocusBlock key={i} maxTime={5} currentTime={i} className="w-3 h-3" />
+          <FocusBlock key={i} maxTime={5} currentTime={i} className="!w-3 !h-3" />
         ))}
         <p className="text-xs">专注</p>
       </div>

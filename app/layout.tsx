@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className={classNames("pbg px-8 my-8", Rubik.className)}>
+      <body className={classNames("pbg txt px-8 my-8", Rubik.className)}>
         <EnterAnimation />
         <ContextMenuProvider>
           {children}

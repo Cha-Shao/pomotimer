@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import { HTMLAttributes } from "react"
+import dayjs from "dayjs"
 
 interface Props {
   maxTime: number
@@ -9,8 +10,8 @@ interface Props {
 const levelColor = [
   "border-primary/30 bg-primary/20",
   "border-primary/70 bg-primary/50",
-  "border-primary bg-primary brightness-110",
-  "border-primary bg-primary brightness-90",
+  "border-primary bg-primary",
+  "border-[#cf3d36] bg-[#cf3d36]",
 ]
 
 const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
@@ -38,13 +39,27 @@ const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
     <div
       {...attrs}
       className={classNames(
+        "relative group",
         "w-4 h-4 rounded-sm border",
         currentTime === 0
           ? "border-border bg-border/10"
           : levelColor[focusLevel],
         attrs.className
       )}
-    />
+    >
+      <span className={classNames(
+        "opacity-0 group-hover:opacity-100 duration-100",
+        "absolute bottom-5 left-1/2 -translate-x-1/2",
+        "bg rounded-full border border-border/10 shadow-sm",
+        "pointer-events-none",
+        "px-2 w-max z-10",
+        "text-sm"
+      )}>
+        {currentTime > 0
+          ? `${Math.floor(currentTime / 60)}小时${currentTime % 60}分钟`
+          : "今日无专注"}
+      </span>
+    </div>
   )
 }
 

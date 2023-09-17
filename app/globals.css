@@ -8,3 +8,6 @@
 .pbg {
   @apply bg-lightBackground dark:bg-darkBackground;
 }
+.txt {
+  @apply text-dark dark:text-light;
+}

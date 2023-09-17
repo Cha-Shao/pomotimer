@@ -57,10 +57,10 @@ const ToDoCard = (
         <p className={classNames("grow", solved && "line-through")}>
           {props.content}
         </p>
-        <button className="flex justify-center items-center active:scale-50 duration-200" onClick={switchImportant}>
+        <button className="flex justify-center items-center group" onClick={switchImportant}>
           {important
-            ? <span className="icon-[ph--star-fill] text-lg text-primary" />
-            : <span className="icon-[ph--star-bold] text-lg opacity-50" />}
+            ? <span className="icon-[ph--star-fill] text-lg group-active:scale-50 duration-200 text-primary" />
+            : <span className="icon-[ph--star-bold] text-lg group-active:scale-50 duration-200 opacity-50" />}
         </button>
       </div>
     </ContextMenuTrigger>
