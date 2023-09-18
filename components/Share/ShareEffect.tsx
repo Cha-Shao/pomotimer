@@ -14,6 +14,7 @@ export interface EffectProps {
   id: number,
   x: number,
   y: number
+  rotate: number,
 }
 
 const ShareEffect = ({
@@ -32,12 +33,17 @@ const ShareEffect = ({
           initial={{ scale: 0, x: "-50%", y: "-50%" }}
           animate={{ scale: 1 }}
           exit={{ opacity: 0, y: "-90%" }}
-          transition={{ duration: 0.1 }}
+          transition={{
+            duration: 0.1,
+            type: "spring",
+            damping: 16,
+            stiffness: 256,
+          }}
           className="absolute"
           style={{
-            rotate: -22.5 + Math.round(Math.random() * 45),
             left: effect.x,
             top: effect.y,
+            rotate: effect.rotate,
           }}
         >
           <HeartIcon setEffects={setEffects} />

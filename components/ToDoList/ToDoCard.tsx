@@ -26,6 +26,10 @@ const ToDoCard = (
   return (
     <ContextMenuTrigger
       menus={[{
+        label: "开始专注",
+        icon: "icon-[ph--barbell-bold]",
+        action: () => { },
+      }, {
         label: solved ? "标记为未完成" : "标记为已完成",
         icon: solved ? "icon-[ph--circle-bold]" : "icon-[ph--check-circle-bold]",
         action: switchSolve,

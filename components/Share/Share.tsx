@@ -21,12 +21,13 @@ const Share = () => {
         id: new Date().getTime(),
         x: e.clientX - buttonRef.current!.offsetLeft,
         y: e.clientY + window.scrollY - buttonRef.current!.offsetTop,
+        rotate: -22.5 + Math.round(Math.random() * 45),
       },
     ]))
   }
 
   return (
-    <Card>
+    <Card >
       <h2 className="font-bold text-2xl mb-4">分享番茄钟</h2>
       <p className="mb-4">如果觉得好用，请向您的朋友分享这个网站！</p>
       <CopyToClipboard text="https://target.elfmc.com/">

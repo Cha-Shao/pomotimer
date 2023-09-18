@@ -48,13 +48,20 @@ const FocusTime = () => {
       <p className="text-sm mb-2">近一月专注情况</p>
       <div className="flex flex-wrap gap-1 place-items-stretch mb-2">
         {focusData.focusTime.map((day, i) => (
-          <FocusBlock key={i} maxTime={maxTime} currentTime={day} />
+          <FocusBlock key={i} date={new Date().getTime() - ((30 - 1) * 86400000 - i * 86400000)} maxTime={maxTime} currentTime={day} />
         ))}
       </div>
       <div className="flex justify-end items-center gap-1">
-        <p className="text-xs">分心</p>
+        <p className="text-xs">休息</p>
         {Array(5).fill(null).map((_, i) => (
-          <FocusBlock key={i} maxTime={5} currentTime={i} className="!w-3 !h-3" noHover />
+          <FocusBlock
+            key={i}
+            date={0}
+            maxTime={5}
+            currentTime={i}
+            noHover
+            className="!w-3 !h-3"
+          />
         ))}
         <p className="text-xs">专注</p>
       </div>

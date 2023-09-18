@@ -3,6 +3,7 @@
 import {
   Fragment,
   useEffect,
+  useRef,
   useState,
 } from "react"
 import Card from "../Card"
@@ -17,7 +18,11 @@ import {
 import classNames from "classnames"
 import confetti from "canvas-confetti"
 
+const MotionCard = motion(Card)
+
 const ToDoListCard = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState<number | "auto">("auto")
   const [hoverItem, setHoverItem] = useState<number | null>(null)
   const [inputToDo, setInputToDo] = useState("")
   const [toDoList, setToDoList] = useState<ToDo[] | null>(null)
@@ -92,9 +97,25 @@ const ToDoListCard = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      const observedHeight = entries[0].contentRect.height
+      setHeight(observedHeight + 24 + 16 + 24 * 2)
+    })
+
+    resizeObserver.observe(containerRef.current!)
+
+    return () => resizeObserver.disconnect()
+  }, [])
+
   return (
-    <Card title="任务列表" className="mb-4">
-      <div>
+    <MotionCard
+      title="任务列表"
+      className="mb-4"
+      animate={{ height }}
+      transition={{ duration: 0.1 }}
+    >
+      <div ref={containerRef}>
         <div className="flex items-center pbg border-2 border-border/10 focus-within:border-primary duration-100 rounded-lg">
           <input
             type="text"
@@ -173,6 +194,7 @@ const ToDoListCard = () => {
                     initial={{ opacity: 0, height: 0, marginTop: 0 }}
                     animate={{ opacity: 1, height: "auto", marginTop: "1rem" }}
                     exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                    transition={{ duration: 0.1 }}
                     className="overflow-hidden"
                     onMouseLeave={() => setHoverItem(null)}
                   >
@@ -228,7 +250,7 @@ const ToDoListCard = () => {
           </div>
         )}
       </div>
-    </Card >
+    </MotionCard >
   )
 }
 

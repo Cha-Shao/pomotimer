@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import EnterAnimation from "@/components/EnterAnimation"
 import localFont from "next/font/local"
 import classNames from "classnames"
+import Header from "@/components/Header"
 
 const Rubik = localFont({
   src: [{
@@ -18,8 +19,9 @@ const Rubik = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "目标",
-  description: "管理时间，达成目标",
+  title: "POMOTIMER",
+  description: "帮助自己管理时间的工具",
+  keywords: "番茄钟, POMOTER, pomodoro",
 }
 
 export default function RootLayout({
@@ -29,10 +31,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className={classNames("pbg txt px-8 my-8", Rubik.className)}>
+      <body className={classNames("pbg txt max-w-7xl min-w-[1024px] mx-auto px-8", Rubik.className)}>
         <EnterAnimation />
         <ContextMenuProvider>
-          {children}
+          <Header />
+          <main>
+            {children}
+          </main>
         </ContextMenuProvider>
       </body>
     </html>

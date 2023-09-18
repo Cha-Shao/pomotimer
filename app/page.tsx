@@ -6,7 +6,7 @@ import Share from "@/components/Share/Share"
 
 export default function Home() {
   return (
-    <main className="max-w-7xl min-w-[1024px] mx-auto grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 gap-4">
       <section className="col-span-2">
         <Focus />
         <Card>
@@ -20,6 +20,6 @@ export default function Home() {
         <ToDoList />
         <Share />
       </section>
-    </main>
+    </div>
   )
 }

@@ -1,9 +1,17 @@
-import { HTMLAttributes } from "react"
+import {
+  ForwardedRef,
+  HTMLAttributes,
+  forwardRef,
+} from "react"
 import classNames from "classnames"
 
-const Card = (props: HTMLAttributes<HTMLDivElement>) => {
+const Card = forwardRef((
+  props: HTMLAttributes<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
   return (
     <div
+      ref={ref}
       {...props}
       title={undefined}
       className={classNames(
@@ -15,6 +23,8 @@ const Card = (props: HTMLAttributes<HTMLDivElement>) => {
       {props.children}
     </div>
   )
-}
+})
+
+Card.displayName = "Card"
 
 export default Card

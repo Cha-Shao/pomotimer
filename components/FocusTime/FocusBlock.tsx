@@ -1,7 +1,9 @@
 import classNames from "classnames"
 import { HTMLAttributes } from "react"
+import dayjs from "dayjs"
 
 interface Props {
+  date: number
   maxTime: number
   currentTime: number
   noHover?: boolean
@@ -16,6 +18,7 @@ const levelColor = [
 
 const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
   const {
+    date,
     maxTime,
     currentTime,
     noHover,
@@ -56,9 +59,11 @@ const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
         "px-2 w-max z-10",
         "text-sm"
       )}>
+        {dayjs(date).format("MM月DD日")}
+        {" "}
         {currentTime > 0
           ? `${Math.floor(currentTime / 60)}小时${currentTime % 60}分钟`
-          : "今日无专注"}
+          : "无专注活动"}
       </span>}
     </div>
   )
