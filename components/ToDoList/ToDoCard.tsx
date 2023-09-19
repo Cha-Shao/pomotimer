@@ -1,7 +1,11 @@
 import { ToDo } from "@/types/toDoList"
-import { HTMLAttributes } from "react"
+import {
+  HTMLAttributes,
+  useContext,
+} from "react"
 import classNames from "classnames"
 import ContextMenuTrigger from "../ContextMenu/ContextMenuTrigger"
+import { currentToDoContext } from "@/app/providers"
 
 const ToDoCard = (
   props: ToDo
@@ -23,12 +27,19 @@ const ToDoCard = (
     ...attrs
   } = props
 
+  const { setCurrentToDo } = useContext(currentToDoContext)
+
   return (
     <ContextMenuTrigger
       menus={[{
         label: "开始专注",
         icon: "icon-[ph--barbell-bold]",
-        action: () => { },
+        action: () => setCurrentToDo({
+          id,
+          content,
+          important,
+          solved,
+        }),
       }, {
         label: solved ? "标记为未完成" : "标记为已完成",
         icon: solved ? "icon-[ph--circle-bold]" : "icon-[ph--check-circle-bold]",

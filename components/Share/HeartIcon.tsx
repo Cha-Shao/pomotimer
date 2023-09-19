@@ -2,14 +2,14 @@
 
 import {
   Dispatch,
-  SVGAttributes,
+  SVGProps,
   SetStateAction,
   useEffect,
 } from "react"
 import { EffectProps } from "./ShareEffect"
 
 export function HeartIcon(
-  props: SVGAttributes<SVGSVGElement>
+  props: SVGProps<SVGSVGElement>
     & { setEffects: Dispatch<SetStateAction<EffectProps[]>> }
 ) {
   const {

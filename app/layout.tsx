@@ -1,10 +1,10 @@
-import ContextMenuProvider from "@/components/ContextMenu/ContextMenuProvider"
 import "./globals.css"
 import type { Metadata } from "next"
 import EnterAnimation from "@/components/EnterAnimation"
 import localFont from "next/font/local"
 import classNames from "classnames"
 import Header from "@/components/Header"
+import Providers from "./providers"
 
 const Rubik = localFont({
   src: [{
@@ -33,12 +33,12 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body className={classNames("pbg txt max-w-7xl min-w-[1024px] mx-auto px-8", Rubik.className)}>
         <EnterAnimation />
-        <ContextMenuProvider>
+        <Providers>
           <Header />
           <main>
             {children}
           </main>
-        </ContextMenuProvider>
+        </Providers>
       </body>
     </html>
   )

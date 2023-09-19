@@ -1,14 +1,12 @@
 import { SVGAttributes } from "react"
 
 const CircleProgressBar = (props: {
-  label?: string
   percentage: number
   radius?: number
   width?: number
   weight?: number
 } & SVGAttributes<SVGSVGElement>) => {
   const {
-    label,
     percentage,
     radius = 85,
     width = 200,
@@ -54,11 +52,6 @@ const CircleProgressBar = (props: {
         }}
         transform={`rotate(-90 ${width / 2} ${width / 2})`}
       />
-      {label && (
-        <text x="50%" y="50%" dy="0.3em" textAnchor="middle" className="">
-          {label}
-        </text>
-      )}
     </svg>
   )
 }

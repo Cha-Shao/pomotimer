@@ -5,8 +5,8 @@ import {
   useEffect,
   useRef,
 } from "react"
-import { contextMenuContext } from "./ContextMenuProvider"
 import { motion } from "framer-motion"
+import { contextMenuContext } from "@/app/providers"
 
 export interface MenuProps {
   label: string
@@ -58,7 +58,7 @@ const ContextMenu = (props: ContextMenuProps) => {
             setContextMenu(null)
           }}
           className={classNames(
-            "py-2 px-4   flex items-center gap-2 rounded-md",
+            "py-2 px-4 flex items-center gap-2 rounded-md",
             menu.danger ? "hover:bg-red-500 hover:text-white" : "hover:bg-lightBackground dark:hover:bg-darkBackground"
           )}
         >

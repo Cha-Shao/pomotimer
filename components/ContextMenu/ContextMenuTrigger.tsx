@@ -7,7 +7,7 @@ import {
   useContext,
 } from "react"
 import { MenuProps } from "./ContextMenu"
-import { contextMenuContext } from "./ContextMenuProvider"
+import { contextMenuContext } from "@/app/providers"
 
 export interface ContextMenuProps {
   x: number,

@@ -17,6 +17,8 @@ import {
 } from "framer-motion"
 import classNames from "classnames"
 import confetti from "canvas-confetti"
+import { ConfettiIcon } from "./ConfettiIcon"
+import { EmptyIcon } from "./EmptyIcon"
 
 const MotionCard = motion(Card)
 
@@ -132,51 +134,59 @@ const ToDoListCard = () => {
           </div>
         </div>
         {toDoList ? (
-          toDoList.length > 0 ? (
+          toDoList.length !== 0 ? (
             <Fragment>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="my-4"
-                onMouseLeave={() => setHoverItem(null)}
-              >
-                <Reorder.Group
-                  as="ul"
-                  values={toDoList}
-                  onReorder={newList => {
-                    setToDoList(newList)
-                    localStorage.setItem("to-do-list", JSON.stringify(newList))
-                  }}
+              {toDoList.filter(toDo => !toDo.solved).length !== 0 ? (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="my-4"
+                  onMouseLeave={() => setHoverItem(null)}
                 >
-                  {toDoList.map(toDo => (
-                    <Reorder.Item
-                      key={toDo.id}
-                      id={toDo.id.toString()}
-                      value={toDo}
-                      className="relative"
-                    >
-                      {!toDo.solved && (
-                        <Fragment>
-                          <ToDoCard
-                            {...toDo}
-                            onMouseEnter={() => setHoverItem(toDo.id)}
-                            switchSolve={() => handleSwitchSolve(toDo.id)}
-                            switchImportant={() => handleSwitchImportant(toDo.id)}
-                            onDelete={() => handleDelete(toDo.id)}
-                          />
-                          {toDo.id === hoverItem && (
-                            <motion.div
-                              layoutId="to-do-list"
-                              className="absolute top-0 h-full w-full pbg rounded-md"
-                              transition={{ duration: 0.1 }}
+                  <Reorder.Group
+                    as="ul"
+                    values={toDoList}
+                    onReorder={newList => {
+                      setToDoList(newList)
+                      localStorage.setItem("to-do-list", JSON.stringify(newList))
+                    }}
+                  >
+                    {toDoList.map(toDo => (
+                      <Reorder.Item
+                        key={toDo.id}
+                        id={toDo.id.toString()}
+                        value={toDo}
+                        className="relative"
+                      >
+                        {!toDo.solved && (
+                          <Fragment>
+                            <ToDoCard
+                              {...toDo}
+                              onMouseEnter={() => setHoverItem(toDo.id)}
+                              switchSolve={() => handleSwitchSolve(toDo.id)}
+                              switchImportant={() => handleSwitchImportant(toDo.id)}
+                              onDelete={() => handleDelete(toDo.id)}
                             />
-                          )}
-                        </Fragment>
-                      )}
-                    </Reorder.Item>
-                  ))}
-                </Reorder.Group>
-              </motion.div>
+                            {toDo.id === hoverItem && (
+                              <motion.div
+                                layoutId="to-do-list"
+                                className="absolute top-0 h-full w-full pbg rounded-md"
+                                transition={{ duration: 0.1 }}
+                              />
+                            )}
+                          </Fragment>
+                        )}
+                      </Reorder.Item>
+                    ))}
+                  </Reorder.Group>
+                </motion.div>
+              ) : (
+                <div className="text-center my-4 py-4">
+                  <ConfettiIcon className="mx-auto mb-4" />
+                  <p>全部任务已完成</p>
+                  <p className="opacity-50 text-sm">在上方添加新的任务</p>
+                </div>
+              )}
               <motion.button
                 layout
                 className="mx-auto pbg px-2 text-sm rounded-full flex items-center gap-1"
@@ -240,7 +250,8 @@ const ToDoListCard = () => {
             </Fragment>
           ) : (
             <div className="text-center my-4 py-4">
-              <p>没有任务了</p>
+              <EmptyIcon className="mx-auto mb-4" />
+              <p>这里没有任务</p>
               <p className="opacity-50 text-sm">在上方添加新的任务</p>
             </div>
           )
