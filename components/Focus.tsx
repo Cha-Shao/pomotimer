@@ -9,37 +9,60 @@ import {
   motion,
 } from "framer-motion"
 
+const devSpeed = 10
+
+enum Status {
+  Stop,
+  Run,
+  Pause
+}
+enum Step {
+  Focus,
+  Break
+}
+const notificationMessage = [
+  "专注时间已结束，休息一下吧！",
+  "休息时间已结束，加油！",
+]
+
 const Focus = () => {
-  const [paused, setPaused] = useState(false)
+  const [status, setStatus] = useState<Status>(Status.Stop)
+  const [step, setStep] = useState<Step>(Step.Focus)
   const [seconds, setSeconds] = useState<number | null>(null)
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null)
 
-  const handlePause = () => {
-    setPaused(true)
-    clearInterval(intervalId!)
-  }
-  const handleRestore = () => {
-    setPaused(false)
-    const intervalId = setInterval(() => {
-      setSeconds(prevSeconds => {
-        if (prevSeconds === 1) {
-          handleFinish(intervalId)
-          return null
-        }
-        return prevSeconds! - 1
-      })
-    }, 1000)
-    setIntervalId(intervalId)
+  const togglePause = () => {
+    if (status === Status.Run) {
+      setStatus(Status.Pause)
+      clearInterval(intervalId!)
+    }
+    else {
+      setStatus(Status.Run)
+      const intervalId = setInterval(() => {
+        setSeconds(prevSeconds => {
+          if (prevSeconds === 1) {
+            handleFinish(intervalId)
+            return null
+          }
+          return prevSeconds! - 1
+        })
+      }, devSpeed)
+      setIntervalId(intervalId)
+    }
   }
   const handleFinish = (intervalId: NodeJS.Timeout) => {
     clearInterval(intervalId!)
     setSeconds(null)
-    new Notification("番茄钟", {
-      body: "专注时间已结束，休息一下吧！",
+    setStatus(Status.Stop)
+    new Notification(
+      "番茄钟", {
+      body: notificationMessage[step],
+      icon: "/icon.jpg",
     })
   }
   const handleStart = () => {
     setSeconds(25 * 60)
+    setStatus(Status.Run)
     const intervalId = setInterval(() => {
       setSeconds(prevSeconds => {
         if (prevSeconds === 1) {
@@ -48,8 +71,7 @@ const Focus = () => {
         }
         return prevSeconds! - 1
       })
-      // }, 1000)
-    }, 1)
+    }, devSpeed)
     setIntervalId(intervalId)
   }
 
@@ -98,18 +120,39 @@ const Focus = () => {
         "准备开始"
       )}
       <div className="text-center mb-6">
-        <button
-          className={classNames(
-            "rounded-full px-6 py-2 text-light",
-            "bg-primary hover:brightness-105 active:brightness-95 active:scale-95",
-            "duration-100",
-            "shadow-lg shadow-primary/25",
-            "text-lg font-bold"
-          )}
-          onClick={handleStart}
-        >
-          开始专注
-        </button>
+        {status === Status.Stop ? (
+          <motion.button
+            className={classNames(
+              "rounded-full px-6 py-2 text-light",
+              "bg-primary hover:brightness-105 active:brightness-95 active:scale-95",
+              "inline-flex justify-center items-center",
+              "duration-100",
+              "shadow-lg shadow-primary/25",
+              "text-lg font-bold"
+            )}
+            layoutId="focus-button"
+            onClick={handleStart}
+          >
+            开始专注
+          </motion.button>
+        ) : (
+          <motion.button
+            className={classNames(
+              "h-12 w-12",
+              "rounded-full border border-border",
+              "inline-flex justify-center items-center"
+            )}
+            layoutId="focus-button"
+            onClick={togglePause}
+          >
+            <span className={classNames(
+              status === Status.Pause
+                ? "icon-[ph--pause-bold]"
+                : "icon-[ph--play-bold]",
+              "text-xl"
+            )} />
+          </motion.button>
+        )}
       </div>
     </Card>
   )

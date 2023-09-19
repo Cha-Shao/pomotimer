@@ -9,7 +9,6 @@ import {
 import ContextMenu, {
   ContextMenuProps,
 } from "../components/ContextMenu/ContextMenu"
-import { AnimatePresence } from "framer-motion"
 import { ToDo } from "@/types/toDoList"
 
 export const contextMenuContext = createContext<{
@@ -39,9 +38,7 @@ const Providers = ({
     <contextMenuContext.Provider value={{ contextMenu, setContextMenu }}>
       <currentToDoContext.Provider value={{ currentToDo, setCurrentToDo }}>
         {children}
-        <AnimatePresence>
-          {contextMenu && <ContextMenu {...contextMenu} />}
-        </AnimatePresence>
+        {contextMenu && <ContextMenu {...contextMenu} />}
       </currentToDoContext.Provider>
     </contextMenuContext.Provider>
   )

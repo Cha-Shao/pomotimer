@@ -23,6 +23,7 @@ const Settings = () => {
     if (!receiveNotification) {
       if (Notification.permission !== "granted")
         Notification.requestPermission()
+          .then(res => res === "granted" && setReceiveNotification(true))
       else
         setReceiveNotification(true)
     }
@@ -30,24 +31,12 @@ const Settings = () => {
       setReceiveNotification(false)
   }
 
-  const setupNotification = () => {
-    const initialized = localStorage.getItem("initialized") === "true"
-    if (!initialized) {
-      setReceiveNotification(false)
-      Notification.requestPermission()
-    } else {
-      const receiveNotification = localStorage.getItem("notification") === "true"
-      setReceiveNotification(receiveNotification)
-    }
-  }
-
   useEffect(() => {
-    setupNotification()
+    setReceiveNotification(localStorage.getItem("notification") === "true")
   }, [])
 
   return (
     <Fragment>
-      <button onClick={() => { Notification.requestPermission() }}>qwq</button>
       <button className={settingButtonClassName} onClick={toggleNotification}>
         <span className={classNames(
           receiveNotification
