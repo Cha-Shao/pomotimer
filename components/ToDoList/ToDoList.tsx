@@ -7,7 +7,7 @@ import {
   useState,
 } from "react"
 import Card from "../Card"
-import { ToDo } from "@/types/toDoList"
+import { ToDo } from "@/types/toDo"
 import ToDoCard from "./ToDoCard"
 import {
   AnimatePresence,
@@ -16,79 +16,47 @@ import {
   useCycle,
 } from "framer-motion"
 import classNames from "classnames"
-import confetti from "canvas-confetti"
 import { ConfettiIcon } from "./ConfettiIcon"
 import { EmptyIcon } from "./EmptyIcon"
+import {
+  toDoController,
+} from "@/controllers/toDo"
+import { toDoStore } from "@/stores/toDo"
+import { useStore } from "@nanostores/react"
 
 const MotionCard = motion(Card)
 
 const ToDoListCard = () => {
+  const toDo = useStore(toDoStore)
+  // 视觉用
   const containerRef = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState<number | "auto">("auto")
   const [hoverItem, setHoverItem] = useState<number | null>(null)
+  const [expanded, toggleExpanded] = useCycle(false, true)
+  // 数据
   const [inputToDo, setInputToDo] = useState("")
   const [toDoList, setToDoList] = useState<ToDo[] | null>(null)
-  const [expanded, toggleExpanded] = useCycle(false, true)
 
   const handleAdd = () => {
-    const thisList = {
-      id: new Date().getTime(),
-      content: inputToDo,
-      important: false,
-      solved: false,
-    } as ToDo
-    const newToDoList = [...toDoList || [], thisList]
-    setToDoList(newToDoList)
-    localStorage.setItem("to-do-list", JSON.stringify(newToDoList))
+    setToDoList(toDoController.add(inputToDo))
     setInputToDo("")
   }
-  const handleSwitchSolve = (id: number) => {
-    const newToDoList = toDoList!.map(toDo => {
-      if (toDo.id === id) {
-        if (!toDo.solved) {
-          confetti({
-            origin: { x: 0 },
-            angle: 60,
-          })
-          confetti({
-            origin: { x: 1 },
-            angle: 120,
-          })
-        }
-        return {
-          ...toDo,
-          solved: !toDo.solved,
-        }
-      }
-      return toDo
-    })
-    setToDoList(newToDoList)
-    localStorage.setItem("to-do-list", JSON.stringify(newToDoList))
-  }
-  const handleSwitchImportant = (id: number) => {
-    const newToDoList = toDoList!.map(toDo => {
-      if (toDo.id === id) {
-        return {
-          ...toDo,
-          important: !toDo.important,
-        }
-      }
-      return toDo
-    })
-    setToDoList(newToDoList)
-    localStorage.setItem("to-do-list", JSON.stringify(newToDoList))
-  }
-  const handleDelete = (id: number) => {
-    const newToDoList = toDoList!.filter(toDo => toDo.id !== id)
-    setToDoList(newToDoList)
-    localStorage.setItem("to-do-list", JSON.stringify(newToDoList))
-  }
+  const handleSwitchSolve = (id: number) =>
+    setToDoList(toDoController.solve(id))
 
+  const handleSwitchImportant = (id: number) =>
+    setToDoList(toDoController.important(id))
+
+  const handleDelete = (id: number) =>
+    setToDoList(toDoController.delete(id))
+
+  // 初始化to do list
   useEffect(() => {
     const toDoListInLocalStorage = localStorage.getItem("to-do-list")
     if (toDoListInLocalStorage) {
       try {
         setToDoList(JSON.parse(toDoListInLocalStorage))
+        toDoStore.set(JSON.parse(toDoListInLocalStorage))
       } catch {
         localStorage.setItem("to-do-list", "[]")
         setToDoList([])
@@ -99,16 +67,24 @@ const ToDoListCard = () => {
     }
   }, [])
 
+  // to do 完成时卡片高度的动画
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       const observedHeight = entries[0].contentRect.height
       setHeight(observedHeight + 24 + 16 + 24 * 2)
     })
-
     resizeObserver.observe(containerRef.current!)
 
     return () => resizeObserver.disconnect()
   }, [])
+
+  // 将 state 同步到 store，因为要协调framer-motion的Reorder
+  useEffect(() => {
+    toDoStore.set({
+      ...toDoStore.get(),
+      list: toDoList!,
+    })
+  }, [toDoList])
 
   return (
     <MotionCard
@@ -133,10 +109,10 @@ const ToDoListCard = () => {
             <span className="icon-[ph--arrow-elbow-down-left]" />
           </div>
         </div>
-        {toDoList ? (
-          toDoList.length !== 0 ? (
+        {toDo.list ? (
+          toDo.list.length !== 0 ? (
             <Fragment>
-              {toDoList.filter(toDo => !toDo.solved).length !== 0 ? (
+              {toDo.list.filter(toDo => !toDo.solved).length !== 0 ? (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -145,13 +121,13 @@ const ToDoListCard = () => {
                 >
                   <Reorder.Group
                     as="ul"
-                    values={toDoList}
+                    values={toDo.list}
                     onReorder={newList => {
                       setToDoList(newList)
                       localStorage.setItem("to-do-list", JSON.stringify(newList))
                     }}
                   >
-                    {toDoList.map(toDo => (
+                    {toDo.list.map(toDo => (
                       <Reorder.Item
                         key={toDo.id}
                         id={toDo.id.toString()}
@@ -191,6 +167,7 @@ const ToDoListCard = () => {
                 layout
                 className="mx-auto pbg px-2 text-sm rounded-full flex items-center gap-1"
                 onClick={() => toggleExpanded()}
+                transition={{ duration: 0.1 }}
               >
                 <span>已完成任务</span>
                 <span className={classNames(
@@ -199,7 +176,7 @@ const ToDoListCard = () => {
                 )} />
               </motion.button>
               <AnimatePresence>
-                {(expanded && toDoList.filter(toDo => toDo.solved).length > 0) && (
+                {(expanded && toDo.list.filter(toDo => toDo.solved).length > 0) && (
                   <motion.div
                     initial={{ opacity: 0, height: 0, marginTop: 0 }}
                     animate={{ opacity: 1, height: "auto", marginTop: "1rem" }}
@@ -210,13 +187,13 @@ const ToDoListCard = () => {
                   >
                     <Reorder.Group
                       as="ul"
-                      values={toDoList}
+                      values={toDo.list}
                       onReorder={newList => {
                         setToDoList(newList)
                         localStorage.setItem("to-do-list", JSON.stringify(newList))
                       }}
                     >
-                      {toDoList.map(toDo => (
+                      {toDo.list.map(toDo => (
                         <Reorder.Item
                           key={toDo.id}
                           id={toDo.id.toString()}

@@ -1,11 +1,10 @@
-import { ToDo } from "@/types/toDoList"
-import {
-  HTMLAttributes,
-  useContext,
-} from "react"
+import { ToDo } from "@/types/toDo"
+import { HTMLAttributes } from "react"
 import classNames from "classnames"
 import ContextMenuTrigger from "../ContextMenu/ContextMenuTrigger"
-import { currentToDoContext } from "@/app/providers"
+import { toDoController } from "@/controllers/toDo"
+import { useStore } from "@nanostores/react"
+import { toDoStore } from "@/stores/toDo"
 
 const ToDoCard = (
   props: ToDo
@@ -27,14 +26,14 @@ const ToDoCard = (
     ...attrs
   } = props
 
-  const { setCurrentToDo } = useContext(currentToDoContext)
+  const toDo = useStore(toDoStore)
 
   return (
     <ContextMenuTrigger
       menus={[{
-        label: "开始专注",
+        label: toDo.current?.id === id ? "正在专注" : "开始专注",
         icon: "icon-[ph--barbell-bold]",
-        action: () => setCurrentToDo({
+        action: () => toDoController.current({
           id,
           content,
           important,
@@ -61,7 +60,7 @@ const ToDoCard = (
           "relative",
           "p-2 list-none z-10 flex items-center gap-2",
           solved && "opacity-50",
-          attrs.className
+          attrs.className,
         )}
       >
         <button className="flex justify-center items-center" onClick={switchSolve}>

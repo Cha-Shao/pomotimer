@@ -5,50 +5,53 @@ import Link from "next/link"
 import {
   Fragment,
   useEffect,
-  useState,
 } from "react"
-
-const settingButtonClassName = classNames(
-  "w-8 h-8",
-  "border border-border",
-  "flex justify-center items-center",
-  "hover:bg-primary hover:border-primary hover:text-light",
-  "rounded-md duration-100",
-)
+import IconButton from "./IconButton"
+import { sendNotificationStore } from "@/stores/notification"
+import { useStore } from "@nanostores/react"
 
 const Settings = () => {
-  const [receiveNotification, setReceiveNotification] = useState(false)
+  const sendNotification = useStore(sendNotificationStore)
 
   const toggleNotification = () => {
-    if (!receiveNotification) {
+    if (!sendNotification) {
       if (Notification.permission !== "granted")
         Notification.requestPermission()
-          .then(res => res === "granted" && setReceiveNotification(true))
-      else
-        setReceiveNotification(true)
+          .then(res => {
+            if (res === "granted") {
+              sendNotificationStore.set(true)
+              localStorage.setItem("notification", "true")
+            }
+          })
+      else {
+        sendNotificationStore.set(true)
+        localStorage.setItem("notification", "true")
+      }
     }
-    else
-      setReceiveNotification(false)
+    else {
+      sendNotificationStore.set(false)
+      localStorage.removeItem("notification")
+    }
   }
 
   useEffect(() => {
-    setReceiveNotification(localStorage.getItem("notification") === "true")
+    sendNotificationStore.set(localStorage.getItem("notification") === "true")
   }, [])
 
   return (
     <Fragment>
-      <button className={settingButtonClassName} onClick={toggleNotification}>
+      <IconButton onClick={toggleNotification} className="group">
         <span className={classNames(
-          receiveNotification
-            ? "icon-[ph--bell-simple-bold]"
-            : "icon-[ph--bell-simple-slash-bold]",
-          "text-lg"
+          sendNotification
+            ? "icon-[ph--bell-simple-bold] text-lg"
+            : "icon-[ph--bell-simple-slash-bold] text-lg",
+          "text-lg group-active:scale-50 duration-100"
         )} />
-      </button>
+      </IconButton>
       <Link href={"https://github.com/Cha-Shao/target"}>
-        <button className={settingButtonClassName}>
-          <span className="icon-[ph--github-logo-bold] text-lg" />
-        </button>
+        <IconButton className="group">
+          <span className="icon-[ph--github-logo-bold] text-lg group-active:scale-50 duration-100" />
+        </IconButton>
       </Link>
     </Fragment>
   )

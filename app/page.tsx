@@ -1,7 +1,7 @@
 import Card from "@/components/Card"
 import ToDoList from "@/components/ToDoList/ToDoList"
 import FocusTime from "@/components/FocusTime/FocusTime"
-import Focus from "@/components/Focus"
+import Focus from "@/components/Focus/Focus"
 import Share from "@/components/Share/Share"
 
 export default function Home() {

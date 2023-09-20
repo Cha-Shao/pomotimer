@@ -9,7 +9,7 @@ import {
 import ContextMenu, {
   ContextMenuProps,
 } from "../components/ContextMenu/ContextMenu"
-import { ToDo } from "@/types/toDoList"
+import { AnimatePresence } from "framer-motion"
 
 export const contextMenuContext = createContext<{
   contextMenu: ContextMenuProps | null,
@@ -18,13 +18,6 @@ export const contextMenuContext = createContext<{
   contextMenu: null,
   setContextMenu: () => { },
 })
-export const currentToDoContext = createContext<{
-  currentToDo: ToDo | null,
-  setCurrentToDo: Dispatch<SetStateAction<ToDo | null>>
-}>({
-  currentToDo: null,
-  setCurrentToDo: () => { },
-})
 
 const Providers = ({
   children,
@@ -32,14 +25,13 @@ const Providers = ({
   children: React.ReactNode
 }) => {
   const [contextMenu, setContextMenu] = useState<ContextMenuProps | null>(null)
-  const [currentToDo, setCurrentToDo] = useState<ToDo | null>(null)
 
   return (
     <contextMenuContext.Provider value={{ contextMenu, setContextMenu }}>
-      <currentToDoContext.Provider value={{ currentToDo, setCurrentToDo }}>
-        {children}
+      {children}
+      <AnimatePresence>
         {contextMenu && <ContextMenu {...contextMenu} />}
-      </currentToDoContext.Provider>
+      </AnimatePresence>
     </contextMenuContext.Provider>
   )
 }
