@@ -12,4 +12,5 @@ export interface Focus {
   seconds: number | null,
   step: Step
   status: Status
+  focusId: NodeJS.Timeout | null
 }

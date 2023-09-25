@@ -5,4 +5,5 @@ export const focusStore = atom<Focus>({
   seconds: null,
   status: Status.Stop,
   step: Step.Focus,
+  focusId: null,
 })

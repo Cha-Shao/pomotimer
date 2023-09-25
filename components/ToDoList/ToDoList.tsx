@@ -35,35 +35,18 @@ const ToDoListCard = () => {
   const [expanded, toggleExpanded] = useCycle(false, true)
   // 数据
   const [inputToDo, setInputToDo] = useState("")
-  const [toDoList, setToDoList] = useState<ToDo[] | null>(null)
-
-  const handleAdd = () => {
-    setToDoList(toDoController.add(inputToDo))
-    setInputToDo("")
-  }
-  const handleSwitchSolve = (id: number) =>
-    setToDoList(toDoController.solve(id))
-
-  const handleSwitchImportant = (id: number) =>
-    setToDoList(toDoController.important(id))
-
-  const handleDelete = (id: number) =>
-    setToDoList(toDoController.delete(id))
 
   // 初始化to do list
   useEffect(() => {
     const toDoListInLocalStorage = localStorage.getItem("to-do-list")
     if (toDoListInLocalStorage) {
       try {
-        setToDoList(JSON.parse(toDoListInLocalStorage))
         toDoStore.set(JSON.parse(toDoListInLocalStorage))
       } catch {
         localStorage.setItem("to-do-list", "[]")
-        setToDoList([])
       }
     } else {
       localStorage.setItem("to-do-list", "[]")
-      setToDoList([])
     }
   }, [])
 
@@ -77,14 +60,6 @@ const ToDoListCard = () => {
 
     return () => resizeObserver.disconnect()
   }, [])
-
-  // 将 state 同步到 store，因为要协调framer-motion的Reorder
-  useEffect(() => {
-    toDoStore.set({
-      ...toDoStore.get(),
-      list: toDoList!,
-    })
-  }, [toDoList])
 
   return (
     <MotionCard
@@ -102,7 +77,10 @@ const ToDoListCard = () => {
             value={inputToDo}
             onChange={e => setInputToDo(e.target.value)}
             onKeyDown={e => {
-              if (e.key === "Enter" && inputToDo) handleAdd()
+              if (e.key === "Enter" && inputToDo) {
+                toDoController.add(inputToDo)
+                setInputToDo("")
+              }
             }}
           />
           <div className="border border-border rounded-md p-1 grid place-items-center bg mr-1">
@@ -123,7 +101,10 @@ const ToDoListCard = () => {
                     as="ul"
                     values={toDo.list}
                     onReorder={newList => {
-                      setToDoList(newList)
+                      toDoStore.set({
+                        ...toDoStore.get(),
+                        list: newList,
+                      })
                       localStorage.setItem("to-do-list", JSON.stringify(newList))
                     }}
                   >
@@ -139,9 +120,9 @@ const ToDoListCard = () => {
                             <ToDoCard
                               {...toDo}
                               onMouseEnter={() => setHoverItem(toDo.id)}
-                              switchSolve={() => handleSwitchSolve(toDo.id)}
-                              switchImportant={() => handleSwitchImportant(toDo.id)}
-                              onDelete={() => handleDelete(toDo.id)}
+                              switchSolve={() => toDoController.solve(toDo.id)}
+                              switchImportant={() => toDoController.important(toDo.id)}
+                              onDelete={() => toDoController.delete(toDo.id)}
                             />
                             {toDo.id === hoverItem && (
                               <motion.div
@@ -189,7 +170,10 @@ const ToDoListCard = () => {
                       as="ul"
                       values={toDo.list}
                       onReorder={newList => {
-                        setToDoList(newList)
+                        toDoStore.set({
+                          ...toDoStore.get(),
+                          list: newList,
+                        })
                         localStorage.setItem("to-do-list", JSON.stringify(newList))
                       }}
                     >
@@ -205,9 +189,9 @@ const ToDoListCard = () => {
                               <ToDoCard
                                 {...toDo}
                                 onMouseEnter={() => setHoverItem(toDo.id)}
-                                switchSolve={() => handleSwitchSolve(toDo.id)}
-                                switchImportant={() => handleSwitchImportant(toDo.id)}
-                                onDelete={() => handleDelete(toDo.id)}
+                                switchSolve={() => toDoController.solve(toDo.id)}
+                                switchImportant={() => toDoController.important(toDo.id)}
+                                onDelete={() => toDoController.delete(toDo.id)}
                               />
                               {toDo.id === hoverItem && (
                                 <motion.div
