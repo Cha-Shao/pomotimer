@@ -7,22 +7,13 @@ import { useStore } from "@nanostores/react"
 import { toDoStore } from "@/stores/toDo"
 
 const ToDoCard = (
-  props: ToDo
-    & Omit<HTMLAttributes<HTMLDivElement>, "id">
-    & {
-      switchSolve: () => void
-      switchImportant: () => void
-      onDelete: () => void
-    }
+  props: ToDo & Omit<HTMLAttributes<HTMLDivElement>, "id">
 ) => {
   const {
     id,
     content,
     important,
     solved,
-    switchSolve,
-    switchImportant,
-    onDelete,
     ...attrs
   } = props
 
@@ -42,15 +33,15 @@ const ToDoCard = (
       }, {
         label: solved ? "标记为未完成" : "标记为已完成",
         icon: solved ? "icon-[ph--circle-bold]" : "icon-[ph--check-circle-bold]",
-        action: switchSolve,
+        action: () => toDoController.solve(id),
       }, {
         label: important ? "取消重要标记" : "标记为重要",
         icon: "icon-[ph--star-bold]",
-        action: switchImportant,
+        action: () => toDoController.important(id),
       }, {
         label: "删除任务",
         icon: "icon-[ph--trash-bold]",
-        action: onDelete,
+        action: () => toDoController.delete(id),
         danger: true,
       }]}
     >
@@ -63,7 +54,10 @@ const ToDoCard = (
           attrs.className,
         )}
       >
-        <button className="flex justify-center items-center" onClick={switchSolve}>
+        <button
+          className="flex justify-center items-center"
+          onClick={() => toDoController.solve(id)}
+        >
           {solved
             ? <span className="icon-[ph--check-circle-fill] text-lg text-primary" />
             : <span className="icon-[ph--circle-bold] text-lg" />}
@@ -71,7 +65,10 @@ const ToDoCard = (
         <p className={classNames("grow", solved && "line-through")}>
           {props.content}
         </p>
-        <button className="flex justify-center items-center group" onClick={switchImportant}>
+        <button
+          className="flex justify-center items-center group"
+          onClick={() => toDoController.important(id)}
+        >
           {important
             ? <span className="icon-[ph--star-fill] text-lg group-active:scale-50 duration-200 text-primary" />
             : <span className="icon-[ph--star-bold] text-lg group-active:scale-50 duration-200 opacity-50" />}

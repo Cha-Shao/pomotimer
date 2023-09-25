@@ -32,7 +32,7 @@ const CircleProgressBar = (props: {
         r={radius}
         className="fill-none stroke-border/10"
         style={{
-          strokeDasharray: `${weight / 4} ${weight / 2}`,
+          strokeDasharray: `${weight / 4} ${weight / 2.017}`,
           strokeDashoffset: strokeDasharray - strokeDasharray,
         }}
         transform={`rotate(-90 ${width / 2} ${width / 2})`}

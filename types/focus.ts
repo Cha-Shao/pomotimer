@@ -9,6 +9,7 @@ export enum Step {
 }
 
 export interface Focus {
+  round: number,
   seconds: number | null,
   step: Step
   status: Status

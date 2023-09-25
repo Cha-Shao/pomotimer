@@ -7,7 +7,6 @@ import {
   useState,
 } from "react"
 import Card from "../Card"
-import { ToDo } from "@/types/toDo"
 import ToDoCard from "./ToDoCard"
 import {
   AnimatePresence,
@@ -41,7 +40,10 @@ const ToDoListCard = () => {
     const toDoListInLocalStorage = localStorage.getItem("to-do-list")
     if (toDoListInLocalStorage) {
       try {
-        toDoStore.set(JSON.parse(toDoListInLocalStorage))
+        toDoStore.set({
+          ...toDoStore.get(),
+          list: JSON.parse(toDoListInLocalStorage),
+        })
       } catch {
         localStorage.setItem("to-do-list", "[]")
       }
@@ -120,9 +122,6 @@ const ToDoListCard = () => {
                             <ToDoCard
                               {...toDo}
                               onMouseEnter={() => setHoverItem(toDo.id)}
-                              switchSolve={() => toDoController.solve(toDo.id)}
-                              switchImportant={() => toDoController.important(toDo.id)}
-                              onDelete={() => toDoController.delete(toDo.id)}
                             />
                             {toDo.id === hoverItem && (
                               <motion.div
@@ -189,9 +188,6 @@ const ToDoListCard = () => {
                               <ToDoCard
                                 {...toDo}
                                 onMouseEnter={() => setHoverItem(toDo.id)}
-                                switchSolve={() => toDoController.solve(toDo.id)}
-                                switchImportant={() => toDoController.important(toDo.id)}
-                                onDelete={() => toDoController.delete(toDo.id)}
                               />
                               {toDo.id === hoverItem && (
                                 <motion.div

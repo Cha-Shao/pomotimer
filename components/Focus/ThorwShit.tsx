@@ -11,11 +11,11 @@ import { motion } from "framer-motion"
 const ThrowShit = ({
   setShit,
 }: {
-  setShit: Dispatch<SetStateAction<number | null>>
+  setShit: Dispatch<SetStateAction<number>>
 }) => {
   useEffect(() => {
     setTimeout(() => {
-      setShit(null)
+      setShit(prevShit => prevShit + 1)
     }, 1000)
   })
 

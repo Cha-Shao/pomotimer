@@ -62,6 +62,10 @@ export const toDoController = {
       return toDo
     })
     localStorage.setItem("to-do-list", JSON.stringify(newToDoList))
+    toDoStore.set({
+      ...toDoStore.get(),
+      list: newToDoList,
+    })
     return newToDoList
   },
   delete: (id: number): ToDo[] => {
@@ -71,6 +75,7 @@ export const toDoController = {
     toDoStore.set({
       ...toDoStore.get(),
       deleted: deleteToDo!,
+      list: newToDoList,
     })
     return newToDoList
   },

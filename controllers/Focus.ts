@@ -11,12 +11,17 @@ export const focusController = {
   start: (seconds: number = 25 * 60) => {
     const focusId = setInterval(() => {
       const prevState = focusStore.get()
+      if (prevState.seconds === 1) {
+        focusController.finish()
+        return
+      }
       focusStore.set({
         ...prevState,
         seconds: prevState.seconds! - 1,
       })
     }, 1000)
     focusStore.set({
+      round: 0,
       seconds,
       status: Status.Run,
       step: Step.Focus,
@@ -28,6 +33,7 @@ export const focusController = {
     const prevState = focusStore.get()
     clearInterval(prevState.focusId!)
     focusStore.set({
+      round: 0,
       seconds: null,
       status: Status.Stop,
       step: Step.Focus,
@@ -52,5 +58,8 @@ export const focusController = {
     } else {
       focusController.start(prevState.seconds!)
     }
+  },
+  skip: () => {
+
   },
 }

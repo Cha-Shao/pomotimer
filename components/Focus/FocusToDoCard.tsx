@@ -24,7 +24,7 @@ const FocusToDoCard = () => {
         >
           <div className={classNames(
             "p-4 rounded-xl relative",
-            "border border-primary/50 bg-primary/5",
+            "border-2 border-primary/50 bg-primary/5",
             "flex justify-between items-end",
           )}>
             <div>
