@@ -31,11 +31,12 @@ export const focusController = {
   finish: () => {
     const prevFocusData = focusStore.get()
     clearInterval(prevFocusData.focusId!)
-    new Notification(
-      "番茄钟", {
-      body: notificationMessage[prevFocusData.step],
-      icon: "/icon.jpg",
-    })
+    if (sendNotificationStore.get())
+      new Notification(
+        "番茄钟", {
+        body: notificationMessage[prevFocusData.step],
+        icon: "/icon.jpg",
+      })
     focusStore.set({
       pauseTime: 0,
       seconds: null,
