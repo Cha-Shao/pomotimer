@@ -1,21 +1,19 @@
 "use client"
 
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from "react"
+import { useEffect } from "react"
 import { ShitIcon } from "./ShitIcon"
 import { motion } from "framer-motion"
+import { focusStore } from "@/stores/focus"
 
-const ThrowShit = ({
-  setShit,
-}: {
-  setShit: Dispatch<SetStateAction<number>>
-}) => {
+const ThrowShit = () => {
+
   useEffect(() => {
     setTimeout(() => {
-      setShit(prevShit => prevShit + 1)
+      const prevFocusData = focusStore.get()
+      focusStore.set({
+        ...prevFocusData,
+        pauseTime: prevFocusData.pauseTime + 1,
+      })
     }, 1000)
   })
 

@@ -10,53 +10,62 @@ const notificationMessage = [
 export const focusController = {
   start: (seconds: number = 25 * 60) => {
     const focusId = setInterval(() => {
-      const prevState = focusStore.get()
-      if (prevState.seconds === 1) {
+      const prevFocusData = focusStore.get()
+      if (prevFocusData.seconds === 1) {
         focusController.finish()
         return
       }
       focusStore.set({
-        ...prevState,
-        seconds: prevState.seconds! - 1,
+        ...prevFocusData,
+        seconds: prevFocusData.seconds! - 1,
       })
     }, 1000)
     focusStore.set({
-      round: 0,
+      ...focusStore.get(),
       seconds,
       status: Status.Run,
-      step: Step.Focus,
       focusId,
     })
     return focusId
   },
-  finish: (type: "finish" | "cancel" = "finish") => {
-    const prevState = focusStore.get()
-    clearInterval(prevState.focusId!)
+  finish: () => {
+    const prevFocusData = focusStore.get()
+    clearInterval(prevFocusData.focusId!)
+    new Notification(
+      "番茄钟", {
+      body: notificationMessage[prevFocusData.step],
+      icon: "/icon.jpg",
+    })
     focusStore.set({
-      round: 0,
+      ...prevFocusData,
+      pauseTime: 0,
       seconds: null,
       status: Status.Stop,
-      step: Step.Focus,
       focusId: null,
     })
-    if (sendNotificationStore.get() && type === "finish")
-      new Notification(
-        "番茄钟", {
-        body: notificationMessage[prevState.step],
-        icon: "/icon.jpg",
-      })
+  },
+  cancel: () => {
+    const prevFocusData = focusStore.get()
+    focusStore.set({
+      ...prevFocusData,
+      pauseTime: 0,
+      seconds: null,
+      status: Status.Stop,
+      focusId: null,
+    })
   },
   togglePause: () => {
-    const prevState = focusStore.get()
-    if (prevState.status === Status.Run) {
-      clearInterval(prevState.focusId!)
+    const prevFocusData = focusStore.get()
+    if (prevFocusData.status === Status.Run) {
+      clearInterval(prevFocusData.focusId!)
       focusStore.set({
-        ...prevState,
+        ...prevFocusData,
+        pauseTime: prevFocusData.pauseTime + 1,
         status: Status.Pause,
         focusId: null,
       })
     } else {
-      focusController.start(prevState.seconds!)
+      focusController.start(prevFocusData.seconds!)
     }
   },
   skip: () => {

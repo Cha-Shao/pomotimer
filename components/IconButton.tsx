@@ -12,7 +12,7 @@ const IconButton = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
         "w-8 h-8",
         "border border-border",
         "flex justify-center items-center",
-        "hover:bg-primary hover:border-primary hover:text-light",
+        "hover:bg-border/10 duration-100",
         "rounded-md duration-100",
       )}
     >

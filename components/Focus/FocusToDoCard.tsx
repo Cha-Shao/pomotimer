@@ -33,7 +33,7 @@ const FocusToDoCard = () => {
             </div>
             <div className="flex gap-2">
               <IconButton onClick={() => toDoController.current(null)}>
-                <span className="icon-[ph--trash-bold] text-lg" />
+                <span className="icon-[ph--x-bold] text-lg" />
               </IconButton>
               <IconButton onClick={() => {
                 // 这个不知道为啥说是null 上面不是&&了吗
