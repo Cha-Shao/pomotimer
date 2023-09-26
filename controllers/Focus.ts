@@ -37,10 +37,12 @@ export const focusController = {
       icon: "/icon.jpg",
     })
     focusStore.set({
-      ...prevFocusData,
       pauseTime: 0,
       seconds: null,
       status: Status.Stop,
+      step: prevFocusData.step === Step.Focus
+        ? Step.Break
+        : Step.Focus,
       focusId: null,
     })
   },
@@ -67,8 +69,5 @@ export const focusController = {
     } else {
       focusController.start(prevFocusData.seconds!)
     }
-  },
-  skip: () => {
-
   },
 }

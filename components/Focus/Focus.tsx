@@ -138,7 +138,7 @@ const Focus = () => {
                 </button>
                 {focus.status === Status.Pause && (
                   <motion.button
-                    key={"skip"}
+                    key={"finish"}
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -24 }}
@@ -150,7 +150,7 @@ const Focus = () => {
                       "group",
                       "hover:bg-border/10 duration-100",
                     )}
-                    onClick={focusController.skip}
+                    onClick={focusController.finish}
                   >
                     <span className="icon-[ph--fast-forward-bold] text-lg group-active:scale-50 duration-100" />
                   </motion.button>
