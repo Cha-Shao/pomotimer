@@ -109,31 +109,31 @@ const Focus = () => {
                     transition={{ duration: 0.1 }}
                     className={classNames(
                       "h-12 w-12",
-                      "rounded-full border border-border",
+                      "rounded-full border-2 border-border/10",
                       "inline-flex justify-center items-center",
                       "group",
                       "hover:bg-border/10 duration-100",
                     )}
                     onClick={focusController.cancel}
                   >
-                    <span className="icon-[ph--x-bold] text-lg group-active:scale-50 duration-100" />
+                    <span className="icon-[ph--stop-bold] text-lg group-active:scale-50 duration-100" />
                   </motion.button>
                 )}
                 <button
                   className={classNames(
                     "h-16 w-16",
-                    "rounded-full border border-border",
+                    "rounded-full border-2 border-border/10",
                     "inline-flex justify-center items-center",
                     "group",
-                    "hover:bg-border/10",
+                    "hover:bg-border/10 duration-100",
                   )}
                   onClick={focusController.togglePause}
                 >
                   <span className={classNames(
                     focus.status === Status.Run
-                      ? "icon-[ph--pause-bold] text-lg"
-                      : "icon-[ph--play-bold] text-lg",
-                    "text-xl group-active:scale-50 duration-100"
+                      ? "icon-[ph--pause-bold]"
+                      : "icon-[ph--play-bold]",
+                    "text-2xl group-active:scale-50 duration-100"
                   )} />
                 </button>
                 {focus.status === Status.Pause && (
@@ -145,7 +145,7 @@ const Focus = () => {
                     transition={{ duration: 0.1 }}
                     className={classNames(
                       "h-12 w-12",
-                      "rounded-full border border-border",
+                      "rounded-full border-2 border-border/10",
                       "inline-flex justify-center items-center",
                       "group",
                       "hover:bg-border/10 duration-100",
@@ -161,9 +161,7 @@ const Focus = () => {
         </AnimatePresence>
       </div>
       <FocusToDoCard />
-      <AnimatePresence>
-        {(focus.pauseTime === 3) && <ThrowShit />}
-      </AnimatePresence>
+      <ThrowShit />
     </Card>
   )
 }

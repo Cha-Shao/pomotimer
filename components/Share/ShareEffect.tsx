@@ -32,7 +32,7 @@ const ShareEffect = ({
           key={effect.id}
           initial={{ scale: 0, x: "-50%", y: "-50%" }}
           animate={{ scale: 1 }}
-          exit={{ opacity: 0, y: "-90%" }}
+          exit={{ opacity: 0, y: "-90%", transition: { type: "just" } }}
           transition={{
             duration: 0.1,
             type: "spring",

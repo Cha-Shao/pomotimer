@@ -8,7 +8,7 @@ const FocusStep = () => {
   const step = useStore(focusStore).step
 
   return (
-    <div className="flex gap-1 p-1 pbg rounded-full w-fit mx-auto">
+    <div className="flex gap-1 p-1 pbg rounded-full w-fit mx-auto border border-border/10">
       <button
         className="py-2 px-6 relative"
         onClick={() => focusStore.set({
