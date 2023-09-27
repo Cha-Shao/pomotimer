@@ -4,12 +4,23 @@ import { useStore } from "@nanostores/react"
 import classNames from "classnames"
 import { motion } from "framer-motion"
 
-const FocusStep = () => {
+const FocusStep = ({
+  disabled,
+}: {
+  disabled: boolean
+}) => {
   const step = useStore(focusStore).step
 
   return (
-    <div className="flex gap-1 p-1 pbg rounded-full w-fit mx-auto border border-border/10">
+    <div className={classNames(
+      "flex gap-1",
+      "w-fit p-1 mx-auto",
+      "pbg rounded-full border border-border/10",
+      "duration-500",
+      disabled && "opacity-50"
+    )}>
       <button
+        disabled={disabled}
         className="py-2 px-6 relative"
         onClick={() => focusStore.set({
           ...focusStore.get(),
@@ -25,12 +36,13 @@ const FocusStep = () => {
         {step === Step.Focus && (
           <motion.div
             layoutId="step"
-            className="absolute left-0 top-0 h-full w-full bg-primary rounded-full"
+            className="absolute left-0 top-0 h-full w-full bg-primary rounded-full shadow-md shadow-primary/20"
             transition={{ duration: 0.2, type: "spring" }}
           />
         )}
       </button>
       <button
+        disabled={disabled}
         className="py-2 px-6 relative"
         onClick={() => focusStore.set({
           ...focusStore.get(),
@@ -46,7 +58,7 @@ const FocusStep = () => {
         {step === Step.Break && (
           <motion.div
             layoutId="step"
-            className="absolute left-0 top-0 h-full w-full bg-primary rounded-full"
+            className="absolute left-0 top-0 h-full w-full bg-primary rounded-full shadow-md shadow-primary/20"
             transition={{ duration: 0.2, type: "spring" }}
           />
         )}

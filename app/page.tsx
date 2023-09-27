@@ -1,6 +1,6 @@
 import Card from "@/components/Card"
 import ToDoList from "@/components/ToDoList/ToDoList"
-import FocusTime from "@/components/FocusTime/FocusTime"
+import FocusTime from "@/components/FocusRecord/FocusRecord"
 import Focus from "@/components/Focus/Focus"
 import Share from "@/components/Share/Share"
 

@@ -33,21 +33,8 @@ const ToDoListCard = () => {
   // 数据
   const [inputToDo, setInputToDo] = useState("")
 
-  // 初始化to do list
   useEffect(() => {
-    const toDoListInLocalStorage = localStorage.getItem("to-do-list")
-    if (toDoListInLocalStorage) {
-      try {
-        toDoStore.set({
-          ...toDoStore.get(),
-          list: JSON.parse(toDoListInLocalStorage),
-        })
-      } catch {
-        localStorage.setItem("to-do-list", "[]")
-      }
-    } else {
-      localStorage.setItem("to-do-list", "[]")
-    }
+    toDoController.init()
   }, [])
 
   // to do 完成时卡片高度的动画

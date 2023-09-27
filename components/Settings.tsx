@@ -1,6 +1,5 @@
 "use client"
 
-import classNames from "classnames"
 import Link from "next/link"
 import {
   Fragment,
@@ -40,18 +39,17 @@ const Settings = () => {
 
   return (
     <Fragment>
-      <IconButton onClick={toggleNotification} className="group">
-        <span className={classNames(
-          sendNotification
-            ? "icon-[ph--bell-simple-bold] text-lg"
-            : "icon-[ph--bell-simple-slash-bold] text-lg",
-          "text-lg group-active:scale-50 duration-100"
-        )} />
-      </IconButton>
-      <Link href={"https://github.com/Cha-Shao/target"}>
-        <IconButton className="group">
-          <span className="icon-[ph--github-logo-bold] text-lg group-active:scale-50 duration-100" />
-        </IconButton>
+      <Link href={"https://focuskit.vercel.app/"} target="_blank">
+        <IconButton icon="icon-[ph--moon-bold]" />
+      </Link>
+      <IconButton
+        icon={sendNotification
+          ? "icon-[ph--bell-simple-bold]"
+          : "icon-[ph--bell-simple-slash-bold]"}
+        onClick={toggleNotification}
+      />
+      <Link href={"https://github.com/Cha-Shao/target"} target="_blank">
+        <IconButton icon="icon-[ph--github-logo-bold]" />
       </Link>
     </Fragment>
   )

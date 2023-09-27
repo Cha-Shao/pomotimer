@@ -1,6 +1,7 @@
 import { focusStore } from "@/stores/focus"
 import { sendNotificationStore } from "@/stores/notification"
 import { Status, Step } from "@/types/focus"
+import focusRecordController from "./focusRecord"
 
 const notificationMessage = [
   "专注时间已结束，休息一下吧！",
@@ -8,7 +9,7 @@ const notificationMessage = [
 ]
 
 const focusController = {
-  start: (seconds: number = 25 * 60) => {
+  start: (seconds?: number) => {
     const focusId = setInterval(() => {
       const prevFocusData = focusStore.get()
       if (prevFocusData.seconds === 1) {
@@ -19,14 +20,20 @@ const focusController = {
         ...prevFocusData,
         seconds: prevFocusData.seconds! - 1,
       })
+      // 休息时间不计入专注时间
+      if (prevFocusData.step === Step.Focus)
+        focusRecordController.append()
     }, 1000)
     focusStore.set({
       ...focusStore.get(),
-      seconds,
+      seconds: seconds
+        ? seconds
+        : focusStore.get().step === Step.Focus
+          ? 25 * 60
+          : 5 * 60,
       status: Status.Run,
       focusId,
     })
-    return focusId
   },
   finish: () => {
     const prevFocusData = focusStore.get()

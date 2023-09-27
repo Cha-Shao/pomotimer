@@ -1,4 +1,6 @@
 import { SVGAttributes } from "react"
+import { motion } from "framer-motion"
+import classNames from "classnames"
 
 const CircleProgressBar = (props: {
   percentage: number
@@ -15,7 +17,7 @@ const CircleProgressBar = (props: {
   } = props
 
   const strokeDasharray = radius * Math.PI * 2
-  const strokeDashoffset = strokeDasharray - (strokeDasharray * percentage) / 100
+  // const strokeDashoffset = strokeDasharray - (strokeDasharray * percentage) / 100
 
   return (
     <svg
@@ -38,15 +40,20 @@ const CircleProgressBar = (props: {
         transform={`rotate(-90 ${width / 2} ${width / 2})`}
       />
       {/* 进度条 */}
-      <circle
+      <motion.circle
         cx={width / 2}
         cy={width / 2}
         strokeWidth={`${weight}px`}
         r={radius}
-        className="fill-none stroke-primary "
+        className={classNames(
+          "fill-none stroke-primary duration-200 ease-linear",
+          percentage > 0 ? "opacity-100" : "opacity-0"
+        )}
+        initial={{ strokeDashoffset: strokeDasharray - (strokeDasharray * 0) / 100 }}
+        animate={{ strokeDashoffset: strokeDasharray - (strokeDasharray * percentage) / 100 }}
         style={{
           strokeDasharray,
-          strokeDashoffset,
+          // strokeDashoffset,
           strokeLinecap: "round",
           strokeLinejoin: "round",
         }}

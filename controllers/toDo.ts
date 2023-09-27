@@ -3,6 +3,21 @@ import { ToDo } from "@/types/toDo"
 import confetti from "canvas-confetti"
 
 const toDoController = {
+  init: () => {
+    const rawToDoList = localStorage.getItem("to-do-list")
+    if (rawToDoList) {
+      try {
+        toDoStore.set({
+          ...toDoStore.get(),
+          list: JSON.parse(rawToDoList),
+        })
+      } catch {
+        localStorage.setItem("to-do-list", "[]")
+      }
+    } else {
+      localStorage.setItem("to-do-list", "[]")
+    }
+  },
   add: (content: string): ToDo[] => {
     const newToDoList = [
       ...toDoStore.get().list,

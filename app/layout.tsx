@@ -5,6 +5,7 @@ import localFont from "next/font/local"
 import classNames from "classnames"
 import Header from "@/components/Header"
 import Providers from "./providers"
+import Footer from "@/components/Footer"
 
 const Rubik = localFont({
   src: [{
@@ -38,6 +39,7 @@ export default function RootLayout({
           <main>
             {children}
           </main>
+          <Footer />
         </Providers>
       </body>
     </html>

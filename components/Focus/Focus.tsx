@@ -20,7 +20,7 @@ const Focus = () => {
 
   return (
     <Card className="mb-4" title="开始专注">
-      <FocusStep />
+      <FocusStep disabled={focus.status !== Status.Stop} />
       <div className="relative">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
           <AnimatePresence mode="wait">

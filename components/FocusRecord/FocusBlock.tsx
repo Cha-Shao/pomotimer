@@ -62,7 +62,7 @@ const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
         {dayjs(date).format("MM月DD日")}
         {" "}
         {currentTime > 0
-          ? `${Math.floor(currentTime / 60)}小时${currentTime % 60}分钟`
+          ? `${Math.floor(currentTime / (60 * 60))}小时${Math.floor(currentTime % (60 * 60) / 60)}分钟`
           : "无专注活动"}
       </span>}
     </div>
