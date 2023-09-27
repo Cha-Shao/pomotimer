@@ -11,9 +11,9 @@ import ThrowShit from "./ThorwShit"
 import FocusToDoCard from "./FocusToDoCard"
 import { useStore } from "@nanostores/react"
 import { focusStore } from "@/stores/focus"
-import { focusController } from "@/controllers/focus"
-import { Status } from "@/types/focus"
 import FocusStep from "./FocusStep"
+import { Status } from "@/types/focus"
+import { focusController } from "@/controllers/focus"
 
 const Focus = () => {
   const focus = useStore(focusStore)

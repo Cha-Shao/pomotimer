@@ -46,8 +46,8 @@ const ThrowShit = () => {
         <motion.div
           initial={{ opacity: 1, x: "-50%", y: "-50%", scale: 0 }}
           animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1, rotate: "-15deg" }}
-          exit={{ opacity: 0, x: "-50%", y: "100%", transition: { duration: 3 } }}
-          className="fixed left-1/2 top-1/2 z-50"
+          exit={{ opacity: 0, x: "-50%", y: "100%", transition: { duration: 2 } }}
+          className="fixed left-1/2 top-1/2 z-50 pointer-events-none"
         >
           <ShitIcon />
         </motion.div>
@@ -55,9 +55,9 @@ const ThrowShit = () => {
           layoutId={"shit-title"}
           initial={{ opacity: 1, x: "-50%", y: "-50%", scale: 0 }}
           animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1, rotate: "15deg" }}
-          exit={{ opacity: 0, x: "-50%", y: "-50%", scale: 0 }}
+          exit={{ opacity: 0, x: "-50%", y: "-50%", transition: { duration: 2 } }}
           transition={{ duration: 0.2 }}
-          className="fixed left-1/2 top-1/2 z-50 text-primary text-9xl font-bold drop-shadow-xl"
+          className="fixed left-1/2 top-1/2 z-50 text-primary text-9xl font-bold drop-shadow-xl pointer-events-none"
         >
           {title[randomTitle]}
         </motion.h1>
