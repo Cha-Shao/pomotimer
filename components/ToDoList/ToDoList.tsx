@@ -17,9 +17,7 @@ import {
 import classNames from "classnames"
 import { ConfettiIcon } from "./ConfettiIcon"
 import { EmptyIcon } from "./EmptyIcon"
-import {
-  toDoController,
-} from "@/controllers/toDo"
+import toDoController from "@/controllers/toDo"
 import { toDoStore } from "@/stores/toDo"
 import { useStore } from "@nanostores/react"
 

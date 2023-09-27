@@ -8,7 +8,7 @@ import {
   motion,
 } from "framer-motion"
 import IconButton from "../IconButton"
-import { toDoController } from "@/controllers/toDo"
+import toDoController from "@/controllers/toDo"
 
 const FocusToDoCard = () => {
   const toDo = useStore(toDoStore)

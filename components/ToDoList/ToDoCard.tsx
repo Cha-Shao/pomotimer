@@ -2,7 +2,7 @@ import { ToDo } from "@/types/toDo"
 import { HTMLAttributes } from "react"
 import classNames from "classnames"
 import ContextMenuTrigger from "../ContextMenu/ContextMenuTrigger"
-import { toDoController } from "@/controllers/toDo"
+import toDoController from "@/controllers/toDo"
 import { useStore } from "@nanostores/react"
 import { toDoStore } from "@/stores/toDo"
 

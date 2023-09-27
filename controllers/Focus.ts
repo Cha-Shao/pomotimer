@@ -7,7 +7,7 @@ const notificationMessage = [
   "休息时间已结束，加油！",
 ]
 
-export const focusController = {
+const focusController = {
   start: (seconds: number = 25 * 60) => {
     const focusId = setInterval(() => {
       const prevFocusData = focusStore.get()
@@ -72,3 +72,5 @@ export const focusController = {
     }
   },
 }
+
+export default focusController

@@ -2,7 +2,7 @@ import { toDoStore } from "@/stores/toDo"
 import { ToDo } from "@/types/toDo"
 import confetti from "canvas-confetti"
 
-export const toDoController = {
+const toDoController = {
   add: (content: string): ToDo[] => {
     const newToDoList = [
       ...toDoStore.get().list,
@@ -86,3 +86,5 @@ export const toDoController = {
     })
   },
 }
+
+export default toDoController
