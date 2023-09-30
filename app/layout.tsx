@@ -6,6 +6,7 @@ import classNames from "classnames"
 import Header from "@/components/Header"
 import Providers from "./providers"
 import Footer from "@/components/Footer"
+import { HighlightInit } from "@highlight-run/next/client"
 
 const Rubik = localFont({
   src: [{
@@ -30,7 +31,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
+  return (<>
+    <HighlightInit
+      projectId="5g5wwjkg"
+      serviceName="PomoTimer"
+      tracingOrigins
+      networkRecording={{
+        enabled: true,
+        recordHeadersAndBody: true,
+        urlBlocklist: [],
+      }}
+    />
     <html lang="zh-CN">
       <body className={classNames("pbg txt max-w-7xl min-w-[1024px] mx-auto px-8", Rubik.className)}>
         <EnterAnimation />
@@ -43,5 +54,5 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
-  )
+  </>)
 }

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@highlight-run/next": "^4.4.2",
     "@nanostores/react": "^0.7.1",
     "@types/node": "20.6.1",
     "@types/react": "18.2.21",
