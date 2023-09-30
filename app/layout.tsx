@@ -7,6 +7,7 @@ import Header from "@/components/Header"
 import Providers from "./providers"
 import Footer from "@/components/Footer"
 import { HighlightInit } from "@highlight-run/next/client"
+import { HIGHLIGHT_PROJECT_ID } from "@/config"
 
 const Rubik = localFont({
   src: [{
@@ -33,7 +34,7 @@ export default function RootLayout({
 }) {
   return (<>
     <HighlightInit
-      projectId="5g5wwjkg"
+      projectId={HIGHLIGHT_PROJECT_ID}
       serviceName="PomoTimer"
       tracingOrigins
       networkRecording={{
