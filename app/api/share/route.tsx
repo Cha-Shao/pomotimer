@@ -146,7 +146,12 @@ const ShareCard = ({
           </div>
           <ZhuanZhu />
         </div>
-        <img src="https://target.elfmc.com/qrcode.webp" alt="" />
+        <div
+          tw="flex h-36 w-36"
+          style={{
+            backgroundImage: "url('https://target.elfmc.com/qrcode.webp')",
+          }}
+        />
       </div>
     </div>
   )
