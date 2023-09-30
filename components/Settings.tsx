@@ -1,56 +1,43 @@
 "use client"
 
-import Link from "next/link"
 import {
   Fragment,
   useEffect,
 } from "react"
 import IconButton from "./IconButton"
-import { sendNotificationStore } from "@/stores/notification"
 import { useStore } from "@nanostores/react"
+import { settingsStore } from "@/stores/settings"
+import settingsController from "@/controllers/settings"
 
 const Settings = () => {
-  const sendNotification = useStore(sendNotificationStore)
-
-  const toggleNotification = () => {
-    if (!sendNotification) {
-      if (Notification.permission !== "granted")
-        Notification.requestPermission()
-          .then(res => {
-            if (res === "granted") {
-              sendNotificationStore.set(true)
-              localStorage.setItem("notification", "true")
-            }
-          })
-      else {
-        sendNotificationStore.set(true)
-        localStorage.setItem("notification", "true")
-      }
-    }
-    else {
-      sendNotificationStore.set(false)
-      localStorage.removeItem("notification")
-    }
-  }
+  const settings = useStore(settingsStore)
 
   useEffect(() => {
-    sendNotificationStore.set(localStorage.getItem("notification") === "true")
+    settingsController.init()
   }, [])
 
   return (
     <Fragment>
-      <Link href={"https://focuskit.vercel.app/"} target="_blank">
-        <IconButton icon="icon-[ph--moon-bold]" />
-      </Link>
       <IconButton
-        icon={sendNotification
+        icon="icon-[ph--moon-bold]"
+        onClick={() => window.open("https://focuskit.vercel.app/")}
+      />
+      <IconButton
+        icon={settings.hideTime
+          ? "icon-[ph--hourglass-bold]"
+          : "icon-[ph--timer-bold]"}
+        onClick={settingsController.hideTime}
+      />
+      <IconButton
+        icon={settings.notification
           ? "icon-[ph--bell-simple-bold]"
           : "icon-[ph--bell-simple-slash-bold]"}
-        onClick={toggleNotification}
+        onClick={settingsController.notification}
       />
-      <Link href={"https://github.com/Cha-Shao/target"} target="_blank">
-        <IconButton icon="icon-[ph--github-logo-bold]" />
-      </Link>
+      <IconButton
+        icon="icon-[ph--github-logo-bold]"
+        onClick={() => window.open("https://github.com/Cha-Shao/target/")}
+      />
     </Fragment>
   )
 }

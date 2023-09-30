@@ -1,7 +1,7 @@
 import { focusStore } from "@/stores/focus"
-import { sendNotificationStore } from "@/stores/notification"
 import { Status, Step } from "@/types/focus"
 import focusRecordController from "./focusRecord"
+import { settingsStore } from "@/stores/settings"
 
 const notificationMessage = [
   "专注时间已结束，休息一下吧！",
@@ -38,7 +38,7 @@ const focusController = {
   finish: () => {
     const prevFocusData = focusStore.get()
     clearInterval(prevFocusData.focusId!)
-    if (sendNotificationStore.get())
+    if (settingsStore.get().notification)
       new Notification(
         "番茄钟", {
         body: notificationMessage[prevFocusData.step],

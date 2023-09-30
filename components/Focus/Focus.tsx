@@ -14,9 +14,12 @@ import { focusStore } from "@/stores/focus"
 import FocusStep from "./FocusStep"
 import { Status } from "@/types/focus"
 import focusController from "@/controllers/focus"
+import { settingsStore } from "@/stores/settings"
+import { HourGlassIcon } from "./HourGlassIcon"
 
 const Focus = () => {
   const focus = useStore(focusStore)
+  const hideTime = useStore(settingsStore).hideTime
 
   return (
     <Card className="mb-4" title="开始专注">
@@ -35,28 +38,39 @@ const Focus = () => {
               >
                 准备开始专注
               </motion.p>
-            ) : (
-              <motion.div
-                key={"run/pause"}
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.5, opacity: 0 }}
-                transition={{ duration: 0.2, type: "spring" }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.h1
-                    key={`digit-${Math.ceil(focus.seconds! / 60).toString().charAt(Math.ceil(focus.seconds! / 60).toString().length - 1)}`}
-                    className="text-7xl text-primary"
-                    initial={{ opacity: 0, y: -7 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -7 }}
-                  >
-                    {Math.ceil(focus.seconds! / 60)}
-                  </motion.h1>
-                </AnimatePresence>
-                <p>分钟</p>
-              </motion.div>
-            )}
+            ) :
+              !hideTime ? (
+                <motion.div
+                  key={"run/pause-timer"}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.5, opacity: 0 }}
+                  transition={{ duration: 0.2, type: "spring" }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.h1
+                      key={`digit-${Math.ceil(focus.seconds! / 60).toString().charAt(Math.ceil(focus.seconds! / 60).toString().length - 1)}`}
+                      className="text-7xl text-primary"
+                      initial={{ opacity: 0, y: -7 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -7 }}
+                    >
+                      {Math.ceil(focus.seconds! / 60)}
+                    </motion.h1>
+                  </AnimatePresence>
+                  <p>分钟</p>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={"run/pause-hourglass"}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.5, opacity: 0 }}
+                  transition={{ duration: 0.2, type: "spring" }}
+                >
+                  <HourGlassIcon className="animate-pulse" />
+                </motion.div>
+              )}
           </AnimatePresence>
         </div>
         <CircleProgressBar
