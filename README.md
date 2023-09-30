@@ -6,16 +6,22 @@
 ![Version](https://img.shields.io/github/package-json/v/Cha-Shao/target)
 [![State-of-the-art Shitcode](https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804)](https://github.com/trekhleb/state-of-the-art-shitcode)
 
-### 开发
+### 命令
 
 ```sh
-$ pnpm i
+# install dependencies
+$ pnpm install
 
+# serve with hot reload at localhost:3016
 $ pnpm dev
+
+# generate the final static site
+$ pnpm build
 ```
 
-### 编译
+### 环境变量
+`.env.local`
 
-```sh
-$ pnpm build
+```ini
+HIGHLIGHT_PROJECT_ID=<string>
 ```

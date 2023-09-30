@@ -33,16 +33,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (<>
-    <HighlightInit
-      projectId={HIGHLIGHT_PROJECT_ID}
-      serviceName="PomoTimer"
-      tracingOrigins
-      networkRecording={{
-        enabled: true,
-        recordHeadersAndBody: true,
-        urlBlocklist: [],
-      }}
-    />
+    {HIGHLIGHT_PROJECT_ID && (
+      <HighlightInit
+        projectId={HIGHLIGHT_PROJECT_ID}
+        serviceName="PomoTimer"
+        tracingOrigins
+        networkRecording={{
+          enabled: true,
+          recordHeadersAndBody: true,
+          urlBlocklist: [],
+        }}
+      />
+    )}
     <html lang="zh-CN">
       <body className={classNames("pbg txt max-w-7xl min-w-[1024px] mx-auto px-8", Rubik.className)}>
         <EnterAnimation />

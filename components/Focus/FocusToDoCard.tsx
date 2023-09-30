@@ -32,16 +32,18 @@ const FocusToDoCard = () => {
               <p>{toDo.current.content}</p>
             </div>
             <div className="flex gap-2">
-              <IconButton onClick={() => toDoController.current(null)}>
-                <span className="icon-[ph--x-bold] text-lg" />
-              </IconButton>
-              <IconButton onClick={() => {
-                // 这个不知道为啥说是null 上面不是&&了吗
-                toDoController.solve(toDo.current!.id)
-                toDoController.current(null)
-              }}>
-                <span className="icon-[ph--check-circle-bold] text-lg" />
-              </IconButton>
+              <IconButton
+                icon="icon-[ph--x-bold]"
+                onClick={() => toDoController.current(null)}
+              />
+              <IconButton
+                icon="icon-[ph--check-circle-bold]"
+                onClick={() => {
+                  // 这个不知道为啥说是null 上面不是&&了吗
+                  toDoController.solve(toDo.current!.id)
+                  toDoController.current(null)
+                }}
+              />
             </div>
           </div>
         </motion.div>
