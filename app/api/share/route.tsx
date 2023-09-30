@@ -1,3 +1,4 @@
+import { WEBSITE_URL } from "@/config"
 import classNames from "classnames"
 import dayjs from "dayjs"
 import { readFile } from "fs/promises"
@@ -149,7 +150,7 @@ const ShareCard = ({
         fontFamily: "Rubik-Regular",
       }}>
         <span tw="opacity-30">https://</span>
-        <span tw="text-[#ed4a3e]">target.elfmc.com</span>
+        <span tw="text-[#ed4a3e]">{WEBSITE_URL}</span>
         <span tw="opacity-30">/</span>
       </p>
     </div>
