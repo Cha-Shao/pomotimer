@@ -48,7 +48,7 @@ const FocusBlock = ({
   }[] = [
       { borderColor: "rgb(237 74 62 / 0.3)", backgroundColor: "rgb(237 74 62 / 0.2)" },
       { borderColor: "rgb(237 74 62 / 0.7)", backgroundColor: "rgb(237 74 62 / 0.5)" },
-      { borderColor: "rgb(237 74 62)", backgroundColor: "rgb(237 74 62)" },
+      { borderColor: "#ed4a3e", backgroundColor: "#ed4a3e" },
       { borderColor: "#c23a33", backgroundColor: "#c23a33" },
     ]
   const focusLevel = (() => {
@@ -78,12 +78,10 @@ const FocusBlock = ({
 }
 
 const ShareCard = ({
-  hour,
-  minute,
+  time,
   focusRecord,
 }: {
-  hour: string,
-  minute: string,
+  time: number,
   focusRecord: number[]
 }) => {
   const maxTime = (() => {
@@ -96,7 +94,7 @@ const ShareCard = ({
 
   return (
     <div
-      tw="flex flex-col bg-[#f0f0f6] w-[480px] h-[600px] p-6"
+      tw="flex flex-col bg-[#f0f0f6] w-[480px] p-6"
       style={{ fontFamily: "Rubik-Bold" }}
     >
       <div tw="flex justify-between items-center mb-4">
@@ -114,11 +112,11 @@ const ShareCard = ({
         <div tw="flex items-center mb-2">
           <JinRiYiZhuanZhu />
           <span tw="text-6xl text-[#ed4a3e] mx-2">
-            {hour}
+            {Math.floor(time / (60 * 60))}
           </span>
           <XiaoShi />
           <span tw="text-6xl text-[#ed4a3e] mx-2">
-            {minute}
+            {Math.floor(time % (60 * 60) / 60)}
           </span>
           <FenZhong />
         </div>
@@ -146,19 +144,22 @@ const ShareCard = ({
           </div>
           <ZhuanZhu />
         </div>
-        <div
-          tw="flex h-36 w-36"
-          style={{
-            backgroundImage: "url('https://target.elfmc.com/qrcode.webp')",
-          }}
-        />
       </div>
+      <p tw="flex justify-center m-0 mt-6" style={{
+        fontFamily: "Rubik-Regular",
+      }}>
+        <span tw="opacity-30">https://</span>
+        <span tw="text-[#ed4a3e]">target.elfmc.com</span>
+        <span tw="opacity-30">/</span>
+      </p>
     </div>
   )
 }
 
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url)
+  const rawTime = searchParams.get("t") || "0"
+  const time = parseInt(rawTime) || 0
   const hour = searchParams.get("h") || "0"
   const minute = searchParams.get("m") || "0"
   const rawFocusRecord = searchParams.get("f") || Array(30).fill(0).toString()
@@ -173,12 +174,11 @@ export const GET = async (req: NextRequest) => {
 
   const image = new ImageResponse(
     <ShareCard
-      hour={hour}
-      minute={minute}
+      time={time}
       focusRecord={focusRecord}
     />, {
     width: 480,
-    height: 540,
+    height: 446,
     fonts: [{
       name: "Rubik-Regular",
       data: await RubikRegular,
