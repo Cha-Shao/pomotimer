@@ -114,6 +114,7 @@ const Tutorial = ({
         left: 0,
       }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0 }}
       className="absolute bg-black/50 z-30"
     />
     <motion.div
@@ -126,6 +127,7 @@ const Tutorial = ({
         left: 0,
       }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0 }}
       className="absolute bg-black/50 z-30"
     />
     <motion.div
@@ -141,6 +143,7 @@ const Tutorial = ({
           + 8}px`,
       }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0 }}
       className="absolute bg-black/50 z-30"
     />
     <motion.div
@@ -153,6 +156,7 @@ const Tutorial = ({
         left: 0,
       }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0 }}
       className="absolute bg-black/50 z-30"
     />
   </>)

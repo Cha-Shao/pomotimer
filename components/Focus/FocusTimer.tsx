@@ -17,6 +17,7 @@ const FocusTimer = () => {
 
   return (
     <div className="relative">
+      <p className="absolute">{JSON.stringify(focus)}</p>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
         <AnimatePresence mode="wait">
           {focus.status === Status.Stop ? (

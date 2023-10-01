@@ -56,6 +56,7 @@ const focusController = {
   },
   cancel: () => {
     const prevFocusData = focusStore.get()
+    clearInterval(prevFocusData.focusId!)
     focusStore.set({
       ...prevFocusData,
       pauseTime: 0,
