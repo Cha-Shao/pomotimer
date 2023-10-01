@@ -7,6 +7,7 @@ import {
 import { motion } from "framer-motion"
 import Card from "./Card"
 import classNames from "classnames"
+import focusController from "@/controllers/focus"
 
 const MotionCard = motion(Card)
 
@@ -39,6 +40,7 @@ const Tutorial = ({
         onFinish()
         return prevStep
       }
+      if (prevStep + 1 === 1) focusController.cancel()
       return prevStep + 1
     })
   }
@@ -55,7 +57,7 @@ const Tutorial = ({
       label: "此处记录了你近30天的专注情况。",
       element: document.getElementById("focus-record")!,
     }, {
-      label: "这里可以暂存待办任务，可右键事项打开详情菜单。",
+      label: "这里可以暂存待办任务，右键待办事项时会打开详情菜单。",
       element: document.getElementById("to-do-list")!,
     }])
     setFocusingStep(0)
