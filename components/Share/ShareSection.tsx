@@ -11,6 +11,7 @@ import {
   useState,
 } from "react"
 import { CopyToClipboard } from "react-copy-to-clipboard"
+import { WEBSITE_URL } from "@/config"
 
 const ShareSection = () => {
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -32,7 +33,9 @@ const ShareSection = () => {
     <Card >
       <h2 className="font-bold text-2xl mb-4">分享番茄钟</h2>
       <p className="mb-4">如果觉得好用，请向您的朋友分享这个网站！</p>
-      <CopyToClipboard text={`【🍅专注番茄钟】https://${window.location.host}/`}>
+      <CopyToClipboard text={`【🍅专注番茄钟】https://${typeof window !== "undefined"
+          ? window.location.host
+          : WEBSITE_URL}/`}>
         <button
           ref={buttonRef}
           className={classNames(
