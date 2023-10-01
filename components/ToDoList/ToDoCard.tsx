@@ -48,6 +48,7 @@ const ToDoCard = (
       <div
         {...attrs}
         className={classNames(
+          "to-do-card",
           "relative",
           "p-2 list-none z-10 flex items-center gap-2",
           solved && "opacity-50",

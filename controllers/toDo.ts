@@ -12,10 +12,38 @@ const toDoController = {
           list: JSON.parse(rawToDoList),
         })
       } catch {
-        localStorage.setItem("to-do-list", "[]")
+        localStorage.setItem("to-do-list", JSON.stringify([{
+          id: new Date().getTime(),
+          content: "了解番茄钟",
+          important: false,
+          solved: false,
+        } as ToDo]))
+        toDoStore.set({
+          ...toDoStore.get(),
+          list: [{
+            id: new Date().getTime(),
+            content: "了解番茄钟",
+            important: false,
+            solved: false,
+          }],
+        })
       }
     } else {
-      localStorage.setItem("to-do-list", "[]")
+      localStorage.setItem("to-do-list", JSON.stringify([{
+        id: new Date().getTime(),
+        content: "了解番茄钟",
+        important: false,
+        solved: false,
+      } as ToDo]))
+      toDoStore.set({
+        ...toDoStore.get(),
+        list: [{
+          id: new Date().getTime(),
+          content: "了解番茄钟",
+          important: false,
+          solved: false,
+        }],
+      })
     }
   },
   add: (content: string): ToDo[] => {

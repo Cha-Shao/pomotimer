@@ -22,10 +22,14 @@ $ pnpm build
 ## 环境变量
 `.env.local`
 
-#### HIGHTLIGHT_PROJECT_ID
+#### HIGHLIGHT_PROJECT_ID
 
 (可选) 是否使用highlight，如果是，填入projectId
 
-#### URL
+#### HIGHLIGHT_SERVICE_NAME
+
+(可选) 若使用highlight，填入一个名字
+
+#### WEBSITE_URL
 
 访问此网站时的链接

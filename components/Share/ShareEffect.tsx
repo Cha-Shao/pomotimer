@@ -39,7 +39,7 @@ const ShareEffect = ({
             damping: 16,
             stiffness: 256,
           }}
-          className="absolute"
+          className="absolute pointer-events-none"
           style={{
             left: effect.x,
             top: effect.y,

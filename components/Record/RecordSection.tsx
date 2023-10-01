@@ -5,21 +5,25 @@ import {
   useState,
 } from "react"
 import Card from "../Card"
-import FocusBlock from "./FocusBlock"
+import FocusBlock from "./RecordBlock"
 import { useStore } from "@nanostores/react"
-import { focusRecordStore } from "@/stores/focusRecord"
-import focusRecordController from "@/controllers/focusRecord"
+import { focusRecordStore } from "@/stores/record"
+import recordController from "@/controllers/record"
 
-const FocusTime = () => {
+const RecordSection = () => {
   const focusRecord = useStore(focusRecordStore)
   const [maxTime, setMaxTime] = useState(0)
 
   useEffect(() => {
-    setMaxTime(focusRecordController.init())
+    setMaxTime(recordController.init())
   }, [])
 
   return (
-    <Card className="mb-4" title="今日已专注">
+    <Card
+      id="focus-record"
+      className="mb-4"
+      title="今日已专注"
+    >
       <p className="mb-4">
         <span className="text-primary font-bold text-4xl mr-2">
           {Math.floor(focusRecord.focusTime[29] / (60 * 60))}
@@ -54,4 +58,4 @@ const FocusTime = () => {
   )
 }
 
-export default FocusTime
+export default RecordSection

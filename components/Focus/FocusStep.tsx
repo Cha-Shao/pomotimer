@@ -12,13 +12,15 @@ const FocusStep = ({
   const step = useStore(focusStore).step
 
   return (
-    <div className={classNames(
-      "flex gap-1",
-      "w-fit p-1 mx-auto",
-      "pbg rounded-full border border-border/10",
-      "duration-500",
-      disabled && "opacity-50"
-    )}>
+    <div
+      id="focus-step"
+      className={classNames(
+        "flex gap-1",
+        "w-fit p-1 mx-auto",
+        "pbg rounded-full border border-border/10",
+        "duration-500",
+        disabled && "opacity-50"
+      )}>
       <button
         disabled={disabled}
         className="py-2 px-6 relative"

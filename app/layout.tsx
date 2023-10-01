@@ -1,13 +1,17 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import EnterAnimation from "@/components/EnterAnimation"
+import InitAnimation from "@/components/InitAnimation"
 import localFont from "next/font/local"
 import classNames from "classnames"
-import Header from "@/components/Header"
+import Header from "@/components/Header/Header"
 import Providers from "./providers"
 import Footer from "@/components/Footer"
 import { HighlightInit } from "@highlight-run/next/client"
-import { HIGHLIGHT_PROJECT_ID } from "@/config"
+import {
+  HIGHLIGHT_PROJECT_ID,
+  HIGHLIGHT_SERVICE_NAME,
+} from "@/config"
+import TutorialProvider from "@/components/TutorialProvider"
 
 const Rubik = localFont({
   src: [{
@@ -36,7 +40,7 @@ export default function RootLayout({
     {HIGHLIGHT_PROJECT_ID && (
       <HighlightInit
         projectId={HIGHLIGHT_PROJECT_ID}
-        serviceName="PomoTimer"
+        serviceName={HIGHLIGHT_SERVICE_NAME}
         tracingOrigins
         networkRecording={{
           enabled: true,
@@ -47,7 +51,8 @@ export default function RootLayout({
     )}
     <html lang="zh-CN">
       <body className={classNames("pbg txt max-w-7xl min-w-[1024px] mx-auto px-8", Rubik.className)}>
-        <EnterAnimation />
+        <TutorialProvider />
+        <InitAnimation />
         <Providers>
           <Header />
           <main>

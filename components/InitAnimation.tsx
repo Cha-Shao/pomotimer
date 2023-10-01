@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Logo from "@/public/icon.jpg"
 
-const EnterAnimation = () => {
+const InitAnimation = () => {
   return (
     <motion.div
       initial={{ height: "100vh" }}
@@ -19,4 +19,4 @@ const EnterAnimation = () => {
   )
 }
 
-export default EnterAnimation
+export default InitAnimation

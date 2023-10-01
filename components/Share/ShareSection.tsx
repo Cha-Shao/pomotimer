@@ -2,16 +2,17 @@
 
 import classNames from "classnames"
 import Card from "../Card"
-import ShareEffect, { EffectProps } from "./ShareEffect"
+import ShareEffect, {
+  EffectProps,
+} from "./ShareEffect"
 import {
   MouseEvent,
   useRef,
   useState,
 } from "react"
 import { CopyToClipboard } from "react-copy-to-clipboard"
-import { WEBSITE_URL } from "@/config"
 
-const Share = () => {
+const ShareSection = () => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [effects, setEffects] = useState<EffectProps[]>([])
 
@@ -31,7 +32,7 @@ const Share = () => {
     <Card >
       <h2 className="font-bold text-2xl mb-4">分享番茄钟</h2>
       <p className="mb-4">如果觉得好用，请向您的朋友分享这个网站！</p>
-      <CopyToClipboard text={`https://${WEBSITE_URL}/`}>
+      <CopyToClipboard text={`【🍅专注番茄钟】https://${window.location.host}/`}>
         <button
           ref={buttonRef}
           className={classNames(
@@ -56,4 +57,4 @@ const Share = () => {
   )
 }
 
-export default Share
+export default ShareSection

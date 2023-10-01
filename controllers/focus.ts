@@ -1,6 +1,6 @@
 import { focusStore } from "@/stores/focus"
 import { Status, Step } from "@/types/focus"
-import focusRecordController from "./focusRecord"
+import recordController from "./record"
 import { settingsStore } from "@/stores/settings"
 
 const notificationMessage = [
@@ -22,7 +22,7 @@ const focusController = {
       })
       // 休息时间不计入专注时间
       if (prevFocusData.step === Step.Focus)
-        focusRecordController.append()
+        recordController.append()
     }, 1000)
     focusStore.set({
       ...focusStore.get(),

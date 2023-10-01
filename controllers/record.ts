@@ -1,9 +1,9 @@
-import { focusRecordStore } from "@/stores/focusRecord"
+import { focusRecordStore } from "@/stores/record"
 import dayjs from "dayjs"
 
-const focusRecordController = {
+const recordController = {
   init: (): number => {
-    const rawFocusRecord = localStorage.getItem("focus-record")
+    const rawFocusRecord = localStorage.getItem("record")
     if (rawFocusRecord) {
       try {
         let focusData: FocusRecord = JSON.parse(rawFocusRecord)
@@ -14,7 +14,6 @@ const focusRecordController = {
             dayjs(focusData.lastUpdate).startOf("day"),
             "day"
           )
-        console.log(intervalDays)
         const newFocusTime = focusData.focusTime
           .slice(intervalDays)
           .concat(Array(intervalDays).fill(0))
@@ -23,21 +22,21 @@ const focusRecordController = {
           lastUpdate: new Date().toISOString(),
         }
         focusRecordStore.set(focusData)
-        localStorage.setItem("focus-record", JSON.stringify(focusData))
+        localStorage.setItem("record", JSON.stringify(focusData))
         let maxTime = 0
         for (const time of focusData.focusTime) {
           maxTime = Math.max(maxTime, time)
         }
         return maxTime
       } catch {
-        localStorage.setItem("focus-record", JSON.stringify({
+        localStorage.setItem("record", JSON.stringify({
           focusTime: Array(30).fill(0),
           lastUpdate: new Date().toISOString(),
         } as FocusRecord))
         return 0
       }
     } else {
-      localStorage.setItem("focus-record", JSON.stringify({
+      localStorage.setItem("record", JSON.stringify({
         focusTime: Array(30).fill(0),
         lastUpdate: new Date().toISOString(),
       } as FocusRecord))
@@ -53,8 +52,8 @@ const focusRecordController = {
       ],
       lastUpdate: new Date().toISOString(),
     })
-    localStorage.setItem("focus-record", JSON.stringify(prevFocusRecordData))
+    localStorage.setItem("record", JSON.stringify(prevFocusRecordData))
   },
 }
 
-export default focusRecordController
+export default recordController

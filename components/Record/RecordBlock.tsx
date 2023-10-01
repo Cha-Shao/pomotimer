@@ -1,6 +1,7 @@
 import classNames from "classnames"
 import { HTMLAttributes } from "react"
 import dayjs from "dayjs"
+import Tooltip from "../Tooltip"
 
 interface Props {
   date: number
@@ -39,33 +40,34 @@ const FocusBlock = (props: Props & HTMLAttributes<HTMLDivElement>) => {
   }
   const focusLevel = getFocusLevel()
 
-  return (
+  return !noHover ? (
+    <Tooltip label={`${dayjs(date).format("MM月DD日")} ${currentTime > 0
+      ? `${Math.floor(currentTime / (60 * 60))}小时${Math.floor(currentTime % (60 * 60) / 60)}分钟`
+      : "无专注活动"}`}>
+      <div
+        {...attrs}
+        className={classNames(
+          "h-4 w-4",
+          "rounded-sm border",
+          "duration-200",
+          currentTime === 0
+            ? "border-border bg-border/10"
+            : levelColor[focusLevel],
+          attrs.className
+        )} />
+    </Tooltip>
+  ) : (
     <div
       {...attrs}
       className={classNames(
-        "relative group",
-        "w-4 h-4 rounded-sm border",
+        "h-4 w-4",
+        "rounded-sm border",
+        "duration-200",
         currentTime === 0
           ? "border-border bg-border/10"
           : levelColor[focusLevel],
         attrs.className
-      )}
-    >
-      {!noHover && <span className={classNames(
-        "opacity-0 group-hover:opacity-100 duration-100",
-        "absolute bottom-5 left-1/2 -translate-x-1/2",
-        "bg rounded-full border border-border/10 shadow-sm",
-        "pointer-events-none",
-        "px-2 w-max z-10",
-        "text-sm"
-      )}>
-        {dayjs(date).format("MM月DD日")}
-        {" "}
-        {currentTime > 0
-          ? `${Math.floor(currentTime / (60 * 60))}小时${Math.floor(currentTime % (60 * 60) / 60)}分钟`
-          : "无专注活动"}
-      </span>}
-    </div>
+      )} />
   )
 }
 
