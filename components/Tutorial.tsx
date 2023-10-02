@@ -65,101 +65,103 @@ const Tutorial = ({
     return () => removeEventListener("resize", onResize)
   }, [])
 
-  return focusStepData && (<>
-    <MotionCard
-      layout
-      initial={{ top: 0, left: 0 }}
-      animate={{
-        left: `${focusStepData[focusingStep].element.offsetLeft + 8}px`,
-        top: `${focusStepData[focusingStep].element.offsetTop
-          + 8
-          + focusStepData[focusingStep].element.clientHeight
-          + 8}px`,
-      }}
+  return focusStepData && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="absolute z-50"
+      className="absolute left-0 top-0 w-screen h-screen overflow-hidden"
     >
-      <p className="mb-2">{focusStepData[focusingStep].label}</p>
-      <div className="flex justify-end items-center gap-4">
-        <button
-          className={classNames(
-            "opacity-50",
-            "hover:brightness-105 active:brightness-95 active:scale-95",
-            "duration-200",
-          )}
-          onClick={prevTip}>
-          上一步
-        </button>
-        <button
-          className={classNames(
-            "bg-primary shadow-md shadow-primary/50",
-            "rounded-lg py-1 px-2",
-            "hover:brightness-105 active:brightness-95 active:scale-95",
-            "text-white duration-200",
-          )}
-          onClick={nextTip}>
-          {focusStepData.length - 1 === focusingStep
-            ? "完成"
-            : "下一步"}
-        </button>
-      </div>
-    </MotionCard>
-    <motion.div
-      key={"top"}
-      initial={{ width: 0, height: 0, top: 0, left: 0 }}
-      animate={{
-        width: "100vw",
-        height: `${focusStepData[focusingStep].element.offsetTop - 8}px`,
-        top: 0,
-        left: 0,
-      }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0 }}
-      className="absolute bg-black/50 z-30"
-    />
-    <motion.div
-      key={"left"}
-      initial={{ width: 0, height: 0, top: 0, left: 0 }}
-      animate={{
-        width: `${focusStepData[focusingStep].element.offsetLeft - 8}px`,
-        height: `${focusStepData[focusingStep].element.clientHeight + 16}px`,
-        top: `${focusStepData[focusingStep].element.offsetTop - 8}px`,
-        left: 0,
-      }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0 }}
-      className="absolute bg-black/50 z-30"
-    />
-    <motion.div
-      key={"right"}
-      initial={{ width: 0, height: 0, top: 0, left: 0 }}
-      animate={{
-        width: `${screenWidth - focusStepData[focusingStep].element.offsetLeft - 8 - focusStepData[focusingStep].element.clientWidth
-          }px`,
-        height: `${focusStepData[focusingStep].element.clientHeight + 16}px`,
-        top: `${focusStepData[focusingStep].element.offsetTop - 8}px`,
-        left: `${focusStepData[focusingStep].element.offsetLeft
-          + focusStepData[focusingStep].element.offsetWidth
-          + 8}px`,
-      }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0 }}
-      className="absolute bg-black/50 z-30"
-    />
-    <motion.div
-      key={"bottom"}
-      initial={{ width: 0, height: 0, top: 0, left: 0 }}
-      animate={{
-        width: "100vw",
-        height: `${screenHeight - focusStepData[focusingStep].element.offsetTop - 8 - focusStepData[focusingStep].element.clientHeight}px`,
-        top: `${focusStepData[focusingStep].element.offsetTop + 8 + focusStepData[focusingStep].element.clientHeight}px`,
-        left: 0,
-      }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0 }}
-      className="absolute bg-black/50 z-30"
-    />
-  </>)
+      <MotionCard
+        layout
+        initial={{ top: 0, left: 0 }}
+        animate={{
+          left: `${focusStepData[focusingStep].element.offsetLeft + 8}px`,
+          top: `${focusStepData[focusingStep].element.offsetTop
+            + 8
+            + focusStepData[focusingStep].element.clientHeight
+            + 8}px`,
+        }}
+        exit={{ opacity: 0 }}
+        className="absolute z-50"
+      >
+        <p className="mb-2">{focusStepData[focusingStep].label}</p>
+        <div className="flex justify-end items-center gap-4">
+          <button
+            className={classNames(
+              "opacity-50",
+              "hover:brightness-105 active:brightness-95 active:scale-95",
+              "duration-200",
+            )}
+            onClick={prevTip}>
+            上一步
+          </button>
+          <button
+            className={classNames(
+              "bg-primary shadow-md shadow-primary/50",
+              "rounded-lg py-1 px-2",
+              "hover:brightness-105 active:brightness-95 active:scale-95",
+              "text-white duration-200",
+            )}
+            onClick={nextTip}>
+            {focusStepData.length - 1 === focusingStep
+              ? "完成"
+              : "下一步"}
+          </button>
+        </div>
+      </MotionCard>
+      <motion.div
+        key={"top"}
+        initial={{ width: 0, height: 0, top: 0, left: 0 }}
+        animate={{
+          width: "100vw",
+          height: `${focusStepData[focusingStep].element.offsetTop - 8}px`,
+          top: 0,
+          left: 0,
+        }}
+        exit={{ opacity: 0 }}
+        className="absolute bg-black/50 z-30"
+      />
+      <motion.div
+        key={"left"}
+        initial={{ width: 0, height: 0, top: 0, left: 0 }}
+        animate={{
+          width: `${focusStepData[focusingStep].element.offsetLeft - 8}px`,
+          height: `${focusStepData[focusingStep].element.clientHeight + 16}px`,
+          top: `${focusStepData[focusingStep].element.offsetTop - 8}px`,
+          left: 0,
+        }}
+        exit={{ opacity: 0 }}
+        className="absolute bg-black/50 z-30"
+      />
+      <motion.div
+        key={"right"}
+        initial={{ width: 0, height: 0, top: 0, left: 0 }}
+        animate={{
+          width: `${window.outerWidth}px`,
+          height: `${focusStepData[focusingStep].element.clientHeight + 16}px`,
+          top: `${focusStepData[focusingStep].element.offsetTop - 8}px`,
+          left: `${focusStepData[focusingStep].element.offsetLeft
+            + focusStepData[focusingStep].element.offsetWidth
+            + 8}px`,
+        }}
+        exit={{ opacity: 0 }}
+        className="absolute bg-black/50 z-30"
+      />
+      <motion.div
+        key={"bottom"}
+        initial={{ width: 0, height: 0, top: 0, left: 0 }}
+        animate={{
+          width: "100vw",
+          height: `${screenHeight - focusStepData[focusingStep].element.offsetTop - 8 - focusStepData[focusingStep].element.clientHeight}px`,
+          top: `${focusStepData[focusingStep].element.offsetTop + 8 + focusStepData[focusingStep].element.clientHeight}px`,
+          left: 0,
+        }}
+        exit={{ opacity: 0 }}
+        className="absolute bg-black/50 z-30"
+      />
+    </motion.div>
+  )
 }
 
 export default Tutorial
