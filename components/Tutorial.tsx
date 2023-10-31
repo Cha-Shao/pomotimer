@@ -114,7 +114,7 @@ const Tutorial = ({
           left: `${focusStepData[focusingStep].element.offsetLeft - 8}px`,
         }}
         exit={{ opacity: 0 }}
-        className="absolute rounded-lg z-30"
+        className="absolute rounded-lg z-30 pointer-events-none"
         style={{
           boxShadow: "#00000080 0px 0px 0px 5000px",
         }}
